@@ -12,6 +12,10 @@ interface OrderFormData {
   // Customer Information
   customerNumber: string;
   customerId: string;
+  customerFirstName: string;
+  customerLastName: string;
+  customerEmail: string;
+  orderDate: string;
 
   // Product Information
   articleNumber: string;
@@ -93,6 +97,10 @@ const ProductionOrderForm: React.FC = () => {
   const [formData, setFormData] = useState<OrderFormData>({
     customerNumber: '',
     customerId: '',
+    customerFirstName: '',
+    customerLastName: '',
+    customerEmail: '',
+    orderDate: new Date().toISOString().split('T')[0],
     articleNumber: '',
     productDescription: '',
     decorationNumber: '',
@@ -151,10 +159,10 @@ const ProductionOrderForm: React.FC = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!formData.customerNumber || !formData.productDescription) {
+    if (!formData.customerNumber || !formData.productDescription || !formData.customerFirstName || !formData.customerLastName || !formData.customerEmail || !formData.orderDate) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields (Customer Name and Product Description).",
+        description: "Please fill in all required fields (Company Name, Product Description, Contact Details, and Order Date).",
         variant: "destructive"
       });
       return;
@@ -175,6 +183,10 @@ const ProductionOrderForm: React.FC = () => {
     setFormData({
       customerNumber: '',
       customerId: '',
+      customerFirstName: '',
+      customerLastName: '',
+      customerEmail: '',
+      orderDate: new Date().toISOString().split('T')[0],
       articleNumber: '',
       productDescription: '',
       decorationNumber: '',
@@ -238,14 +250,30 @@ const ProductionOrderForm: React.FC = () => {
                 Customer Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="customerNumber" className="text-sm font-medium">Customer Name *</Label>
+                <Label htmlFor="customerNumber" className="text-sm font-medium">Company Name *</Label>
                 <Input id="customerNumber" value={formData.customerNumber} onChange={e => handleInputChange('customerNumber', e.target.value)} className="mt-1" required />
               </div>
               <div>
                 <Label htmlFor="customerId" className="text-sm font-medium">Customer ID</Label>
                 <Input id="customerId" value={formData.customerId} onChange={e => handleInputChange('customerId', e.target.value)} className="mt-1" />
+              </div>
+              <div>
+                <Label htmlFor="orderDate" className="text-sm font-medium">Order Date *</Label>
+                <Input id="orderDate" type="date" value={formData.orderDate} onChange={e => handleInputChange('orderDate', e.target.value)} className="mt-1" required />
+              </div>
+              <div>
+                <Label htmlFor="customerFirstName" className="text-sm font-medium">First Name *</Label>
+                <Input id="customerFirstName" value={formData.customerFirstName} onChange={e => handleInputChange('customerFirstName', e.target.value)} className="mt-1" required />
+              </div>
+              <div>
+                <Label htmlFor="customerLastName" className="text-sm font-medium">Last Name *</Label>
+                <Input id="customerLastName" value={formData.customerLastName} onChange={e => handleInputChange('customerLastName', e.target.value)} className="mt-1" required />
+              </div>
+              <div>
+                <Label htmlFor="customerEmail" className="text-sm font-medium">Email Address *</Label>
+                <Input id="customerEmail" type="email" value={formData.customerEmail} onChange={e => handleInputChange('customerEmail', e.target.value)} className="mt-1" required />
               </div>
             </CardContent>
           </Card>
