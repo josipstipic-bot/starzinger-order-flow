@@ -268,6 +268,10 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor="250ml-slim">250 ml Slim</Label>
                   </div>
                   <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="330ml-sleek" id="330ml-sleek" />
+                    <Label htmlFor="330ml-sleek">330 ml Sleek</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
                     <RadioGroupItem value="355ml-sleek" id="355ml-sleek" />
                     <Label htmlFor="355ml-sleek">355 ml Sleek</Label>
                   </div>
