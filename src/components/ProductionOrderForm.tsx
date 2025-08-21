@@ -941,14 +941,24 @@ const ProductionOrderForm: React.FC = () => {
                  </div>
                </div>
 
-               {/* Additional Information */}
+               {/* Delivery Date */}
+               
+             </CardContent>
+           </Card>
+
+           {/* Additional Information */}
+           <Card className="shadow-soft">
+             <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
+               <CardTitle className="text-primary flex items-center gap-2">
+                 <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">8</span>
+                 Additional Information
+               </CardTitle>
+             </CardHeader>
+             <CardContent className="pt-6">
                <div>
                  <Label htmlFor="additionalInfo" className="text-sm font-medium">Additional Information</Label>
                  <Textarea id="additionalInfo" value={formData.additionalInfo} onChange={e => handleInputChange('additionalInfo', e.target.value)} className="mt-1" rows={3} placeholder="Please provide any additional specifications or requirements..." />
                </div>
-
-               {/* Delivery Date */}
-               
              </CardContent>
            </Card>
 
@@ -956,7 +966,7 @@ const ProductionOrderForm: React.FC = () => {
            <Card className="shadow-soft">
              <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5">
                <CardTitle className="text-primary flex items-center gap-2">
-                 <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">8</span>
+                 <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">9</span>
                  Delivery Destinations
                </CardTitle>
              </CardHeader>
