@@ -732,7 +732,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="recipeOther" className="text-sm font-medium">CO2 content in g/L </Label>
+                  <Label htmlFor="recipeOther" className="text-sm font-medium">CO2 content in g/L (+/- 0,1) </Label>
                   <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1" />
                 </div>
               </div>
