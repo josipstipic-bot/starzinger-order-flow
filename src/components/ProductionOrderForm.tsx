@@ -38,6 +38,9 @@ interface OrderFormData {
   containsAllergens: string;
   allergenDetails: string;
 
+  // CO2 Content
+  co2Content: string;
+
   // Dates & Processing
   expiryDate: string;
   pasteurization: string;
@@ -87,6 +90,7 @@ const ProductionOrderForm: React.FC = () => {
     recipeNumber: '',
     containsAllergens: '',
     allergenDetails: '',
+    co2Content: '',
     expiryDate: '',
     pasteurization: '',
     flashPasteurization: '',
@@ -160,6 +164,7 @@ const ProductionOrderForm: React.FC = () => {
       recipeNumber: '',
       containsAllergens: '',
       allergenDetails: '',
+      co2Content: '',
       expiryDate: '',
       pasteurization: '',
       flashPasteurization: '',
@@ -313,6 +318,18 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               
+              {/* CO2 Content */}
+              <div>
+                <Label htmlFor="co2Content" className="text-sm font-medium">Targeted CO2 Content (g/L)</Label>
+                <Input 
+                  id="co2Content" 
+                  value={formData.co2Content || ''} 
+                  onChange={e => handleInputChange('co2Content', e.target.value)} 
+                  className="mt-1" 
+                  placeholder="Enter CO2 content in g/L"
+                />
+              </div>
+
               {/* Top Variants */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
