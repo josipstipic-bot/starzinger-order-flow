@@ -628,7 +628,7 @@ const ProductionOrderForm: React.FC = () => {
                 <h4 className="font-semibold mb-4">EAN/UPC Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">4-Pack or 6-Pack EAN Sticker</Label>
+                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">EAN/UPC Can</Label>
                     <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
                   </div>
                   
