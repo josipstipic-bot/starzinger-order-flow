@@ -276,7 +276,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {['Halal', 'Organic', 'Vegan', 'Alcohol'].map(option => <div key={option} className="flex items-center space-x-2">
+                {['Alcohol', 'Vegan', 'Organic', 'Halal'].map(option => <div key={option} className="flex items-center space-x-2">
                     <Checkbox id={option} checked={formData.specialFilling.includes(option)} onCheckedChange={checked => handleSpecialFillingChange(option, checked as boolean)} />
                     <Label htmlFor={option} className="text-sm font-medium">{option}</Label>
                   </div>)}
@@ -322,95 +322,73 @@ const ProductionOrderForm: React.FC = () => {
               </div>
               
               <div>
-                <Label className="text-sm font-medium mb-3 block">Packaging Type</Label>
+                <Label className="text-sm font-medium mb-3 block">Packaging Option Tray</Label>
                 <RadioGroup value={formData.packagingVariant} onValueChange={value => handleInputChange('packagingVariant', value)}>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="tray" id="tray" />
-                    <Label htmlFor="tray">Tray</Label>
+                    <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
+                    <Label htmlFor="24pcs-tray">24 Pack</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="12pcs-tray" id="12pcs-tray" />
+                    <Label htmlFor="12pcs-tray">12 Pack</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="overfoil" id="overfoil" />
+                    <Label htmlFor="overfoil">4Pack with Overfoil</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
+                    <Label htmlFor="6pcs-tray">6Pack with Overfoil</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="full-wrap" id="full-wrap" />
                     <Label htmlFor="full-wrap">Full Wrap</Label>
                   </div>
                 </RadioGroup>
-                
-                {/* Tray Pack Size Selection */}
-                {formData.packagingVariant === 'tray' && (
-                  <div className="mt-4">
-                    <Label className="text-sm font-medium mb-3 block">Tray Pack Size</Label>
-                    <RadioGroup value={formData.fullWrapPack} onValueChange={value => handleInputChange('fullWrapPack', value)}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
-                        <Label htmlFor="24pcs-tray">24 Pack</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="12pcs-tray" id="12pcs-tray" />
-                        <Label htmlFor="12pcs-tray">12 Pack</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="overfoil" id="overfoil" />
-                        <Label htmlFor="overfoil">4Pack with Overfoil</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
-                        <Label htmlFor="6pcs-tray">6Pack with Overfoil</Label>
-                      </div>
-                    </RadioGroup>
-                    
-                    {/* MOQ Notification for 250ml Slim + 12 Pack */}
-                    {formData.canSize === '250ml-slim' && formData.fullWrapPack === '12pcs-tray' && (
-                      <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <div className="flex items-center gap-2 text-blue-700">
-                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <span className="font-medium">MOQ Information</span>
-                        </div>
-                        <p className="text-sm text-blue-700 mt-1">
-                          For 250ml Slim cans with 12 Pack tray, the Minimum Order Quantity (MOQ) is 400,000 cans.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
-                
-                {/* Full Wrap Pack Size Selection */}
-                {formData.packagingVariant === 'full-wrap' && (
-                  <div className="mt-4">
-                    <Label className="text-sm font-medium mb-3 block">Full Wrap Pack Size</Label>
-                    <RadioGroup value={formData.fullWrapPack} onValueChange={value => handleInputChange('fullWrapPack', value)}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="24-pack" id="full-wrap-24" />
-                        <Label htmlFor="full-wrap-24">24 Pack</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="12-pack" id="full-wrap-12" />
-                        <Label htmlFor="full-wrap-12">12 Pack</Label>
-                      </div>
-                    </RadioGroup>
-                    
-                    {/* Configuration Warning */}
-                    {formData.canSize === '250ml-slim' && formData.fullWrapPack === '12-pack' && (
-                      <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-                        <div className="flex items-center gap-2 text-destructive">
-                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                          </svg>
-                          <span className="font-medium">Configuration Not Supported</span>
-                        </div>
-                        <p className="text-sm text-destructive mt-1">
-                          The combination of 250ml Slim cans with 12 Pack Full Wrap is not supported. Please choose a different can size or pack configuration.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                )}
               </div>
             </CardContent>
             </Card>
 
+          {/* Full Wrap Pack Size Selection */}
+          {formData.packagingVariant === 'full-wrap' && <Card className="shadow-soft">
+              <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
+                <CardTitle className="text-primary flex items-center gap-2">
+                  <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">!</span>
+                  Full Wrap Pack Size
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className="space-y-4">
+                  <Label className="text-sm font-medium">Select Pack Size for Full Wrap</Label>
+                  <RadioGroup value={formData.fullWrapPack} onValueChange={value => handleInputChange('fullWrapPack', value)}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="24-pack" id="full-wrap-24" />
+                      <Label htmlFor="full-wrap-24">24 Pack</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="12-pack" id="full-wrap-12" />
+                      <Label htmlFor="full-wrap-12">12 Pack</Label>
+                    </div>
+                  </RadioGroup>
+                  
+                  {/* Configuration Warning */}
+                  {formData.canSize === '250ml-slim' && formData.fullWrapPack === '12-pack' && <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <div className="flex items-center gap-2 text-destructive">
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                        </svg>
+                        <span className="font-medium">Configuration Not Supported</span>
+                      </div>
+                      <p className="text-sm text-destructive mt-1">
+                        The combination of 250ml Slim cans with 12 Pack Full Wrap is not supported. Please choose a different can size or pack configuration.
+                      </p>
+                    </div>}
+                </div>
+              </CardContent>
+            </Card>}
+
           {/* Conditional Foil Layout Number Field */}
-          {(formData.fullWrapPack === 'overfoil' || formData.fullWrapPack === '6pcs-tray') && <Card className="shadow-soft">
+          {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && <Card className="shadow-soft">
               <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
                 <CardTitle className="text-primary flex items-center gap-2">
                   <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">!</span>
@@ -523,7 +501,9 @@ const ProductionOrderForm: React.FC = () => {
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="flash-yes" />
-                        <Label htmlFor="flash-yes">Yes</Label>
+                        <Label htmlFor="flash-yes">Pasteurization (CO2: max. 4,8 to 5,0 g/L)
+Yes
+No</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="no" id="flash-no" />
@@ -556,7 +536,7 @@ const ProductionOrderForm: React.FC = () => {
           <Card className="shadow-soft">
             <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5">
               <CardTitle className="text-primary flex items-center gap-2">
-                <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">6</span>
+                <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">RTD contains Allergens</span>
                 Packaging & Labeling
               </CardTitle>
             </CardHeader>
@@ -599,7 +579,7 @@ const ProductionOrderForm: React.FC = () => {
               </div>
 
               {/* Palletization - Only for 24Pack */}
-              {formData.fullWrapPack === '24pcs-tray' && <>
+              {formData.packagingVariant === '24pcs-tray' && <>
                   <div>
                     <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type</Label>
                     <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
