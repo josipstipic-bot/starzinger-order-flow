@@ -494,7 +494,7 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
                     <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
                   </div>
-                  <div>
+                  <div className="max-w-xs">
                     <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
                     <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
