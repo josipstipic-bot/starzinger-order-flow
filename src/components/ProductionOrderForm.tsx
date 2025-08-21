@@ -429,41 +429,43 @@ const ProductionOrderForm: React.FC = () => {
                 Can Size & Packaging
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label className="text-sm font-medium mb-3 block">Can Size:</Label>
-                <RadioGroup value={formData.canSize} onValueChange={value => handleInputChange('canSize', value)}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="250ml-slim" id="250ml-slim" />
-                    <Label htmlFor="250ml-slim">250 ml Slim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="330ml-sleek" id="330ml-sleek" />
-                    <Label htmlFor="330ml-sleek">330 ml Sleek</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="355ml-sleek" id="355ml-sleek" />
-                    <Label htmlFor="355ml-sleek">355 ml Sleek</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="500ml-base" id="500ml-base" />
-                    <Label htmlFor="500ml-base">500 ml Base</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-              
-              <div>
-                <Label className="text-sm font-medium mb-3 block">Packaging Type</Label>
-                <RadioGroup value={formData.packagingType || ''} onValueChange={value => handleInputChange('packagingType', value)}>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="tray" id="packaging-tray" />
-                    <Label htmlFor="packaging-tray">Tray</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="full-wrap" id="packaging-full-wrap" />
-                    <Label htmlFor="packaging-full-wrap">Full Wrap</Label>
-                  </div>
-                </RadioGroup>
+            <CardContent className="pt-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Can Size:</Label>
+                  <RadioGroup value={formData.canSize} onValueChange={value => handleInputChange('canSize', value)}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="250ml-slim" id="250ml-slim" />
+                      <Label htmlFor="250ml-slim">250 ml Slim</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="330ml-sleek" id="330ml-sleek" />
+                      <Label htmlFor="330ml-sleek">330 ml Sleek</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="355ml-sleek" id="355ml-sleek" />
+                      <Label htmlFor="355ml-sleek">355 ml Sleek</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="500ml-base" id="500ml-base" />
+                      <Label htmlFor="500ml-base">500 ml Base</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+                
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Packaging Type</Label>
+                  <RadioGroup value={formData.packagingType || ''} onValueChange={value => handleInputChange('packagingType', value)}>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="tray" id="packaging-tray" />
+                      <Label htmlFor="packaging-tray">Tray</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="full-wrap" id="packaging-full-wrap" />
+                      <Label htmlFor="packaging-full-wrap">Full Wrap</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
               </div>
               
               {/* Conditional Pack Size Selection */}
