@@ -80,6 +80,9 @@ interface OrderFormData {
 
   // EAN/UPC for 4Pack/6Pack
   eanUpc4Pack6Pack: string;
+
+  // 4Pack/6Pack EAN Sticker choice
+  fourPack6PackEanSticker: string;
 }
 const ProductionOrderForm: React.FC = () => {
   const [formData, setFormData] = useState<OrderFormData>({
@@ -118,7 +121,8 @@ const ProductionOrderForm: React.FC = () => {
     abvPercentage: '',
     deliveryDate: '',
     foilLayoutNumber: '',
-    eanUpc4Pack6Pack: ''
+    eanUpc4Pack6Pack: '',
+    fourPack6PackEanSticker: ''
   });
   const {
     toast
@@ -196,7 +200,8 @@ const ProductionOrderForm: React.FC = () => {
       abvPercentage: '',
       deliveryDate: '',
       foilLayoutNumber: '',
-      eanUpc4Pack6Pack: ''
+      eanUpc4Pack6Pack: '',
+      fourPack6PackEanSticker: ''
     });
   };
   return <div className="min-h-screen bg-gradient-subtle">
@@ -347,16 +352,33 @@ const ProductionOrderForm: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
-                <div>
-                  <Label htmlFor="foilLayoutNumber" className="text-sm font-medium">Layout Number of the Printed Foil *</Label>
-                  <Input 
-                    id="foilLayoutNumber" 
-                    value={formData.foilLayoutNumber} 
-                    onChange={e => handleInputChange('foilLayoutNumber', e.target.value)} 
-                    className="mt-1 max-w-md" 
-                    placeholder="Enter foil layout number"
-                    required
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="foilLayoutNumber" className="text-sm font-medium">Layout Number of the Printed Foil *</Label>
+                    <Input 
+                      id="foilLayoutNumber" 
+                      value={formData.foilLayoutNumber} 
+                      onChange={e => handleInputChange('foilLayoutNumber', e.target.value)} 
+                      className="mt-1" 
+                      placeholder="Enter foil layout number"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium">4Pack/ 6Pack EAN Sticker</Label>
+                    <RadioGroup value={formData.fourPack6PackEanSticker} onValueChange={value => handleInputChange('fourPack6PackEanSticker', value)}>
+                      <div className="flex items-center space-x-4 mt-2">
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="yes" id="foil-ean-yes" />
+                          <Label htmlFor="foil-ean-yes">Yes</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="no" id="foil-ean-no" />
+                          <Label htmlFor="foil-ean-no">No</Label>
+                        </div>
+                      </div>
+                    </RadioGroup>
+                  </div>
                 </div>
               </CardContent>
             </Card>
