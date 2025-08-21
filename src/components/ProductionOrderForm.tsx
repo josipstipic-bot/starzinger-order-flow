@@ -412,7 +412,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  
+                  <Label className="text-sm font-medium">BPani Next Gen</Label>
                   <RadioGroup value={formData.bpaniNextGen} onValueChange={value => handleInputChange('bpaniNextGen', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
