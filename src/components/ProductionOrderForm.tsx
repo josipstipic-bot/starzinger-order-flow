@@ -442,7 +442,7 @@ const ProductionOrderForm: React.FC = () => {
               <div>
                 <Label className="text-sm font-medium mb-3 block">Writing/Diction (on the bottom of cans)</Label>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                  <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="lg:col-span-2 grid grid-cols-1 gap-4">
                     <div>
                       <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
                       <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
