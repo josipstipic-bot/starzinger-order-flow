@@ -84,6 +84,9 @@ interface OrderFormData {
 
   // 4Pack/6Pack EAN Sticker choice
   fourPack6PackEanSticker: string;
+
+  // Tray EAN Code Printed
+  trayEanCodePrinted: string;
 }
 const ProductionOrderForm: React.FC = () => {
   const [formData, setFormData] = useState<OrderFormData>({
@@ -124,7 +127,8 @@ const ProductionOrderForm: React.FC = () => {
     deliveryDate: '',
     foilLayoutNumber: '',
     eanUpc4Pack6Pack: '',
-    fourPack6PackEanSticker: ''
+    fourPack6PackEanSticker: '',
+    trayEanCodePrinted: ''
   });
   const {
     toast
@@ -204,7 +208,8 @@ const ProductionOrderForm: React.FC = () => {
       deliveryDate: '',
       foilLayoutNumber: '',
       eanUpc4Pack6Pack: '',
-      fourPack6PackEanSticker: ''
+      fourPack6PackEanSticker: '',
+      trayEanCodePrinted: ''
     });
   };
   return <div className="min-h-screen bg-gradient-subtle">
@@ -702,6 +707,28 @@ No</Label>
                          <div className="flex items-center space-x-2">
                            <RadioGroupItem value="no" id="ean-no" />
                            <Label htmlFor="ean-no">No</Label>
+                         </div>
+                       </div>
+                     </RadioGroup>
+                   </div>
+                 </div>
+               </div>
+
+               {/* Tray EAN Code Printed */}
+               <div>
+                 <h4 className="font-semibold mb-4">Tray EAN Code Information</h4>
+                 <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+                   <div>
+                     <Label className="text-sm font-medium">Tray EAN Code is printed on the tray</Label>
+                     <RadioGroup value={formData.trayEanCodePrinted || ''} onValueChange={value => handleInputChange('trayEanCodePrinted', value)}>
+                       <div className="flex items-center space-x-4 mt-2">
+                         <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="yes" id="tray-ean-printed-yes" />
+                           <Label htmlFor="tray-ean-printed-yes">Yes</Label>
+                         </div>
+                         <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="no" id="tray-ean-printed-no" />
+                           <Label htmlFor="tray-ean-printed-no">No</Label>
                          </div>
                        </div>
                      </RadioGroup>
