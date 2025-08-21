@@ -474,7 +474,7 @@ const ProductionOrderForm: React.FC = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <p className="font-medium">Example European Format:</p>
-                          <p>Line 1: MM.DD.YYYY HH:MM</p>
+                          <p>Line 1: DD.MM.YYYY HH:MM</p>
                           <p>Line 2: MM.DD.YYYY L/DDDMM</p>
                         </div>
                         <div>
