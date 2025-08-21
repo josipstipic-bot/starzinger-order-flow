@@ -256,7 +256,7 @@ const ProductionOrderForm: React.FC = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="decorationNumber" className="text-sm font-medium">Decoration Number</Label>
+                <Label htmlFor="decorationNumber" className="text-sm font-medium">Cliche Number</Label>
                 <Input
                   id="decorationNumber"
                   value={formData.decorationNumber}
