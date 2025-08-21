@@ -469,17 +469,19 @@ const ProductionOrderForm: React.FC = () => {
                     <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
                   <div className="bg-muted/50 p-4 rounded-lg">
-                    <div className="text-sm text-muted-foreground space-y-2">
-                      <p className="font-medium text-foreground">Format Examples:</p>
-                      <div>
-                        <p className="font-medium">Example European Format:</p>
-                        <p>Line 1: MM.DD.YYYY HH:MM</p>
-                        <p>Line 2: MM.DD.YYYY L/DDDMM</p>
-                      </div>
-                      <div>
-                        <p className="font-medium">Example US Format:</p>
-                        <p>Line 1: MM.DD.YYYY HH:MM</p>
-                        <p>Line 2: MM.DD.YYYY L/DDDMM</p>
+                    <div className="text-sm text-muted-foreground">
+                      <p className="font-medium text-foreground mb-3">Format Examples:</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <p className="font-medium">Example European Format:</p>
+                          <p>Line 1: MM.DD.YYYY HH:MM</p>
+                          <p>Line 2: MM.DD.YYYY L/DDDMM</p>
+                        </div>
+                        <div>
+                          <p className="font-medium">Example US Format:</p>
+                          <p>Line 1: MM.DD.YYYY HH:MM</p>
+                          <p>Line 2: MM.DD.YYYY L/DDDMM</p>
+                        </div>
                       </div>
                     </div>
                   </div>
