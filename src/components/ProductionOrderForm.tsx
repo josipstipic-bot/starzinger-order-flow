@@ -51,7 +51,6 @@ interface OrderFormData {
   palletType: string;
 
   // Protection & Wrapping
-  cornerProtection: string;
   doubleWrapping: string;
 
   // Tray Information
@@ -66,6 +65,9 @@ interface OrderFormData {
 
   // Additional Information
   additionalInfo: string;
+
+  // ABV Information
+  abvPercentage: string;
 
   // Delivery Information
   deliveryDate: string;
@@ -93,7 +95,6 @@ const ProductionOrderForm: React.FC = () => {
     writingLine1: '',
     writingLine2: '',
     palletType: '',
-    cornerProtection: '',
     doubleWrapping: '',
     trayType: '',
     trayColor: '',
@@ -102,6 +103,7 @@ const ProductionOrderForm: React.FC = () => {
     eanUpcTray: '',
     eanSticker: '',
     additionalInfo: '',
+    abvPercentage: '',
     deliveryDate: ''
   });
   const {
@@ -166,7 +168,6 @@ const ProductionOrderForm: React.FC = () => {
       writingLine1: '',
       writingLine2: '',
       palletType: '',
-      cornerProtection: '',
       doubleWrapping: '',
       trayType: '',
       trayColor: '',
@@ -175,6 +176,7 @@ const ProductionOrderForm: React.FC = () => {
       eanUpcTray: '',
       eanSticker: '',
       additionalInfo: '',
+      abvPercentage: '',
       deliveryDate: ''
     });
   };
@@ -252,6 +254,24 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor={option} className="text-sm font-medium">{option}</Label>
                   </div>)}
               </div>
+              
+              {/* ABV Field - Conditional on Alcohol Selection */}
+              {formData.specialFilling.includes('Alcohol') && (
+                <div className="mt-4">
+                  <Label htmlFor="abvPercentage" className="text-sm font-medium">If Alcohol, please enter the %ABV</Label>
+                  <Input 
+                    id="abvPercentage" 
+                    value={formData.abvPercentage} 
+                    onChange={e => handleInputChange('abvPercentage', e.target.value)} 
+                    className="mt-1 max-w-xs" 
+                    placeholder="e.g., 5.0"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    max="100"
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -462,22 +482,6 @@ const ProductionOrderForm: React.FC = () => {
               {/* Protection Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-sm font-medium">Corner Protection</Label>
-                  <RadioGroup value={formData.cornerProtection} onValueChange={value => handleInputChange('cornerProtection', value)}>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="yes" id="corner-yes" />
-                        <Label htmlFor="corner-yes">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id="corner-no" />
-                        <Label htmlFor="corner-no">No</Label>
-                      </div>
-                    </div>
-                  </RadioGroup>
-                </div>
-                
-                <div>
                   <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
                   <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
                     <div className="flex items-center space-x-4 mt-2">
@@ -490,7 +494,7 @@ const ProductionOrderForm: React.FC = () => {
                         <Label htmlFor="wrap-no">No</Label>
                       </div>
                     </div>
-                  </RadioGroup>
+                  </RadioGroup>             
                 </div>
               </div>
 
