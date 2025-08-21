@@ -233,7 +233,7 @@ const ProductionOrderForm: React.FC = () => {
                 <Input id="productDescription" value={formData.productDescription} onChange={e => handleInputChange('productDescription', e.target.value)} className="mt-1" required />
               </div>
               <div>
-                <Label htmlFor="decorationNumber" className="text-sm font-medium">Cliche Number</Label>
+                <Label htmlFor="decorationNumber" className="text-sm font-medium">Can Layout Number</Label>
                 <Input id="decorationNumber" value={formData.decorationNumber} onChange={e => handleInputChange('decorationNumber', e.target.value)} className="mt-1" />
               </div>
             </CardContent>
