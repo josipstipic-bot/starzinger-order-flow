@@ -262,6 +262,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
+                <Label className="text-sm font-medium mb-3 block">Can Size:</Label>
                 <RadioGroup value={formData.canSize} onValueChange={value => handleInputChange('canSize', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="250ml-slim" id="250ml-slim" />
