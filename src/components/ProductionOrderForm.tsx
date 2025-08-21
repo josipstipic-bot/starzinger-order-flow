@@ -484,6 +484,11 @@ const ProductionOrderForm: React.FC = () => {
                     <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
                 </div>
+                <div className="mt-3 text-sm text-muted-foreground">
+                  <p className="font-medium">Example:</p>
+                  <p>Line 1: DD.MM.YYYY HH:MM</p>
+                  <p>Line 2: DD.MM.YYYY L/DDDYY</p>
+                </div>
               </div>
 
               {/* Palletization */}
