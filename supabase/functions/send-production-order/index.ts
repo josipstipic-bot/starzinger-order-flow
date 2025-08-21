@@ -78,7 +78,7 @@ serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Starzinger Orders <onboarding@resend.dev>',
+          from: 'Production Orders <pl@starzinger.com>',
           to: ['pl@starzinger.com'],
           subject: `New Production Order Specification - ${orderData.orderNumber}`,
           html: emailContent,
@@ -93,7 +93,7 @@ serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Starzinger Orders <onboarding@resend.dev>',
+          from: 'Production Orders <pl@starzinger.com>',
           to: [orderData.customerEmail],
           subject: `Production Order Confirmation - ${orderData.orderNumber}`,
           html: `
