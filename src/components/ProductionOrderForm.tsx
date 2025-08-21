@@ -459,7 +459,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Writing/Diction */}
               <div>
                 <Label className="text-sm font-medium mb-3 block">Writing/Diction (on the bottom of cans)</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                   <div>
                     <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
                     <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
@@ -468,11 +468,21 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
                     <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
-                </div>
-                <div className="mt-3 text-sm text-muted-foreground">
-                  <p className="font-medium">Example:</p>
-                  <p>Example European Format:</p>
-                  <p>Line 2: DD.MM.YYYY L/DDDYY</p>
+                  <div className="bg-muted/50 p-4 rounded-lg">
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p className="font-medium text-foreground">Format Examples:</p>
+                      <div>
+                        <p className="font-medium">Example European Format:</p>
+                        <p>Line 1: MM.DD.YYYY HH:MM</p>
+                        <p>Line 2: MM.DD.YYYY L/DDDMM</p>
+                      </div>
+                      <div>
+                        <p className="font-medium">Example US Format:</p>
+                        <p>Line 1: MM.DD.YYYY HH:MM</p>
+                        <p>Line 2: MM.DD.YYYY L/DDDMM</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
