@@ -527,7 +527,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Writing/Diction */}
               <div>
                 <Label className="text-sm font-medium mb-3 block">Writing/Diction (on the bottom of cans)</Label>
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <div className="space-y-4">
                   <div className="max-w-xs">
                     <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
                     <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
@@ -540,7 +540,7 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor="expiryDate" className="text-xs text-muted-foreground">Expiry in Months:</Label>
                     <Input id="expiryDate" value={formData.expiryDate} onChange={e => handleInputChange('expiryDate', e.target.value)} className="mt-1" />
                   </div>
-                  <div className="bg-muted/50 p-4 rounded-lg">
+                  <div className="bg-muted/50 p-4 rounded-lg max-w-2xl">
                     <div className="text-sm text-muted-foreground">
                       <p className="font-medium text-foreground mb-3">Format Examples:</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
