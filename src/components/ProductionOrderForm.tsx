@@ -32,7 +32,7 @@ interface OrderFormData {
   // Top Variants
   topVariant: string;
   topVariantOther: string;
-  bpaniNextGen: string;
+  
 
   // Recipe & Allergens
   recipeNumber: string;
