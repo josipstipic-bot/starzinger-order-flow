@@ -319,7 +319,7 @@ const ProductionOrderForm: React.FC = () => {
               </div>
               
               <div>
-                <Label className="text-sm font-medium mb-3 block">Packaging Variant</Label>
+                <Label className="text-sm font-medium mb-3 block">Packaging Variant Tray</Label>
                 <RadioGroup value={formData.packagingVariant} onValueChange={value => handleInputChange('packagingVariant', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
@@ -343,8 +343,7 @@ const ProductionOrderForm: React.FC = () => {
           </Card>
 
           {/* Conditional Foil Layout Number Field */}
-          {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && (
-            <Card className="shadow-soft">
+          {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && <Card className="shadow-soft">
               <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
                 <CardTitle className="text-primary flex items-center gap-2">
                   <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">!</span>
@@ -355,24 +354,11 @@ const ProductionOrderForm: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <Label htmlFor="foilLayoutNumber" className="text-sm font-medium">Layout Number of the Printed Foil *</Label>
-                    <Input 
-                      id="foilLayoutNumber" 
-                      value={formData.foilLayoutNumber} 
-                      onChange={e => handleInputChange('foilLayoutNumber', e.target.value)} 
-                      className="mt-1" 
-                      placeholder="Enter foil layout number"
-                      required
-                    />
+                    <Input id="foilLayoutNumber" value={formData.foilLayoutNumber} onChange={e => handleInputChange('foilLayoutNumber', e.target.value)} className="mt-1" placeholder="Enter foil layout number" required />
                   </div>
                   <div>
                     <Label htmlFor="eanUpc4Pack6Pack" className="text-sm font-medium">EAN/UPC 4Pack/ 6Pack</Label>
-                    <Input 
-                      id="eanUpc4Pack6Pack" 
-                      value={formData.eanUpc4Pack6Pack} 
-                      onChange={e => handleInputChange('eanUpc4Pack6Pack', e.target.value)} 
-                      className="mt-1" 
-                      placeholder="Enter EAN/UPC for 4Pack/6Pack"
-                    />
+                    <Input id="eanUpc4Pack6Pack" value={formData.eanUpc4Pack6Pack} onChange={e => handleInputChange('eanUpc4Pack6Pack', e.target.value)} className="mt-1" placeholder="Enter EAN/UPC for 4Pack/6Pack" />
                   </div>
                   <div>
                     <Label className="text-sm font-medium">4Pack/ 6Pack EAN Sticker</Label>
@@ -391,8 +377,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
-          )}
+            </Card>}
 
           {/* Technical Specifications */}
           <Card className="shadow-soft">
@@ -527,7 +512,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Writing/Diction */}
               <div>
                 <Label className="text-sm font-medium mb-3 block">Writing/Diction (on the bottom of cans)</Label>
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                   <div className="max-w-xs">
                     <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
                     <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
@@ -540,7 +525,7 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor="expiryDate" className="text-xs text-muted-foreground">Expiry in Months:</Label>
                     <Input id="expiryDate" value={formData.expiryDate} onChange={e => handleInputChange('expiryDate', e.target.value)} className="mt-1" />
                   </div>
-                  <div className="bg-muted/50 p-4 rounded-lg max-w-2xl">
+                  <div className="bg-muted/50 p-4 rounded-lg">
                     <div className="text-sm text-muted-foreground">
                       <p className="font-medium text-foreground mb-3">Format Examples:</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -561,8 +546,7 @@ const ProductionOrderForm: React.FC = () => {
               </div>
 
               {/* Palletization - Only for 24Pack */}
-              {formData.packagingVariant === '24pcs-tray' && (
-                <>
+              {formData.packagingVariant === '24pcs-tray' && <>
                   <div>
                     <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type</Label>
                     <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
@@ -620,8 +604,7 @@ const ProductionOrderForm: React.FC = () => {
                       </RadioGroup>             
                     </div>
                   </div>
-                </>
-              )}
+                </>}
 
               {/* Tray Information */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
