@@ -198,7 +198,7 @@ const ProductionOrderForm: React.FC = () => {
               <img src="/lovable-uploads/30f5d91d-b692-4ad3-85ff-f9b9b45f5bf2.png" alt="Starzinger Logo" className="h-16 w-auto brightness-0 invert" />
             </div>
             <h1 className="text-3xl font-bold mb-2">Product Specification Form</h1>
-            <p className="text-lg opacity-90">Starzinger Beverage Group - Best in Beverage</p>
+            
           </div>
         </div>
 
@@ -265,22 +265,10 @@ const ProductionOrderForm: React.FC = () => {
               </div>
               
               {/* ABV Field - Conditional on Alcohol Selection */}
-              {formData.specialFilling.includes('Alcohol') && (
-                <div className="mt-4">
+              {formData.specialFilling.includes('Alcohol') && <div className="mt-4">
                   <Label htmlFor="abvPercentage" className="text-sm font-medium">If Alcohol, please enter the %ABV</Label>
-                  <Input 
-                    id="abvPercentage" 
-                    value={formData.abvPercentage} 
-                    onChange={e => handleInputChange('abvPercentage', e.target.value)} 
-                    className="mt-1 max-w-xs" 
-                    placeholder="e.g., 5.0"
-                    type="number"
-                    step="0.1"
-                    min="0"
-                    max="100"
-                  />
-                </div>
-              )}
+                  <Input id="abvPercentage" value={formData.abvPercentage} onChange={e => handleInputChange('abvPercentage', e.target.value)} className="mt-1 max-w-xs" placeholder="e.g., 5.0" type="number" step="0.1" min="0" max="100" />
+                </div>}
             </CardContent>
           </Card>
 
@@ -332,7 +320,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
-                    <Label htmlFor="6pcs-tray">6 Pack</Label>
+                    <Label htmlFor="6pcs-tray">6Pack with Overfoil</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -367,13 +355,7 @@ const ProductionOrderForm: React.FC = () => {
                 
                 <div>
                   <Label htmlFor="topVariantOther" className="text-sm font-medium">Other:</Label>
-                  <Input 
-                    id="topVariantOther" 
-                    value={formData.topVariantOther || ''} 
-                    onChange={e => handleInputChange('topVariantOther', e.target.value)} 
-                    className="mt-1" 
-                    placeholder="Specify other top variant"
-                  />
+                  <Input id="topVariantOther" value={formData.topVariantOther || ''} onChange={e => handleInputChange('topVariantOther', e.target.value)} className="mt-1" placeholder="Specify other top variant" />
                 </div>
                 
                 <div>
@@ -510,8 +492,7 @@ const ProductionOrderForm: React.FC = () => {
                </div>
 
                {/* Conditional Tray Count for Pallets */}
-               {formData.palletType && formData.canSize && (
-                 <div>
+               {formData.palletType && formData.canSize && <div>
                    <Label className="text-sm font-medium">Trays per Pallet</Label>
                    <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
                      <SelectTrigger className="mt-1">
@@ -519,35 +500,22 @@ const ProductionOrderForm: React.FC = () => {
                      </SelectTrigger>
                      <SelectContent>
                        {/* 250ml Slim options */}
-                       {formData.canSize === '250ml-slim' && formData.palletType === 'euro-pallet' && (
-                         <>
+                       {formData.canSize === '250ml-slim' && formData.palletType === 'euro-pallet' && <>
                            <SelectItem value="108">108 Trays per Euro Pallet</SelectItem>
                            <SelectItem value="120">120 Trays per Euro Pallet</SelectItem>
-                         </>
-                       )}
-                       {formData.canSize === '250ml-slim' && formData.palletType === 'uk-pallet' && (
-                         <SelectItem value="160">160 Trays per UK Pallet</SelectItem>
-                       )}
+                         </>}
+                       {formData.canSize === '250ml-slim' && formData.palletType === 'uk-pallet' && <SelectItem value="160">160 Trays per UK Pallet</SelectItem>}
                        
                        {/* 330ml/355ml Sleek options */}
-                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'euro-pallet' && (
-                         <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>
-                       )}
-                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'uk-pallet' && (
-                         <SelectItem value="104">104 Trays per UK Pallet</SelectItem>
-                       )}
+                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'euro-pallet' && <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>}
+                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'uk-pallet' && <SelectItem value="104">104 Trays per UK Pallet</SelectItem>}
                        
                        {/* 500ml Base options */}
-                       {formData.canSize === '500ml-base' && formData.palletType === 'euro-pallet' && (
-                         <SelectItem value="72">72 Trays per Euro Pallet</SelectItem>
-                       )}
-                       {formData.canSize === '500ml-base' && formData.palletType === 'uk-pallet' && (
-                         <SelectItem value="90">90 Trays per UK Pallet</SelectItem>
-                       )}
+                       {formData.canSize === '500ml-base' && formData.palletType === 'euro-pallet' && <SelectItem value="72">72 Trays per Euro Pallet</SelectItem>}
+                       {formData.canSize === '500ml-base' && formData.palletType === 'uk-pallet' && <SelectItem value="90">90 Trays per UK Pallet</SelectItem>}
                      </SelectContent>
                    </Select>
-                 </div>
-               )}
+                 </div>}
 
               {/* Protection Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
