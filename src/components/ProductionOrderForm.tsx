@@ -158,7 +158,6 @@ const ProductionOrderForm: React.FC = () => {
       specialFilling: checked ? [...prev.specialFilling, value] : prev.specialFilling.filter(item => item !== value)
     }));
   };
-
   const handleDeliveryDestinationChange = (value: string, checked: boolean) => {
     setFormData(prev => ({
       ...prev,
@@ -171,19 +170,15 @@ const ProductionOrderForm: React.FC = () => {
     const packagingType = formData.packagingType;
     const packagingVariant = formData.packagingVariant;
     const fullWrapPack = formData.fullWrapPack;
-    
+
     // Determine the pack size for different configurations
     let packSize = '';
     if (packagingType === 'tray') {
-      if (packagingVariant === '24pcs-tray') packSize = '24';
-      else if (packagingVariant === '12pcs-tray') packSize = '12';
-      else if (packagingVariant === 'overfoil') packSize = '4';
-      else if (packagingVariant === '6pcs-tray') packSize = '6';
+      if (packagingVariant === '24pcs-tray') packSize = '24';else if (packagingVariant === '12pcs-tray') packSize = '12';else if (packagingVariant === 'overfoil') packSize = '4';else if (packagingVariant === '6pcs-tray') packSize = '6';
     } else if (packagingType === 'full-wrap') {
-      if (packagingVariant === 'full-wrap-24' || fullWrapPack === '24-pack') packSize = '24';
-      else if (packagingVariant === 'full-wrap-12' || fullWrapPack === '12-pack') packSize = '12';
+      if (packagingVariant === 'full-wrap-24' || fullWrapPack === '24-pack') packSize = '24';else if (packagingVariant === 'full-wrap-12' || fullWrapPack === '12-pack') packSize = '12';
     }
-    
+
     // Define all the configuration rules
     const options = {
       euroOptions: [] as string[],
@@ -191,26 +186,24 @@ const ProductionOrderForm: React.FC = () => {
       isUnsupported: false,
       errorMessage: ''
     };
-    
+
     // Check for unsupported configurations first
     if (canSize === '500ml-base' && packagingType === 'full-wrap' && packSize === '24') {
       options.isUnsupported = true;
       options.errorMessage = 'The combination of 500ml cans with 24 Pack Full Wrap is not supported.';
       return options;
     }
-    
     if (canSize === '250ml-slim' && packagingType === 'full-wrap' && packSize === '12') {
       options.isUnsupported = true;
       options.errorMessage = 'The combination of 250ml Slim cans with 12 Pack Full Wrap is not supported.';
       return options;
     }
-    
     if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'full-wrap' && packSize === '12') {
       options.isUnsupported = true;
       options.errorMessage = 'The combination of 330ml/355ml Sleek cans with 12 Pack Full Wrap is not supported.';
       return options;
     }
-    
+
     // Now handle supported configurations
     if (canSize === '250ml-slim' && packagingType === 'tray') {
       if (packSize === '24' || packSize === '4' || packSize === '6') {
@@ -221,12 +214,10 @@ const ProductionOrderForm: React.FC = () => {
         options.ukOptions = ['310'];
       }
     }
-    
     if (canSize === '250ml-slim' && packagingType === 'full-wrap' && packSize === '24') {
       options.euroOptions = ['120'];
       options.ukOptions = []; // UK not supported for this configuration
     }
-    
     if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'tray') {
       if (packSize === '24' || packSize === '4' || packSize === '6') {
         options.euroOptions = ['90'];
@@ -236,7 +227,6 @@ const ProductionOrderForm: React.FC = () => {
         options.ukOptions = ['225'];
       }
     }
-    
     if (canSize === '500ml-base' && packagingType === 'tray') {
       if (packSize === '24' || packSize === '4' || packSize === '6') {
         options.euroOptions = ['63', '72'];
@@ -246,20 +236,16 @@ const ProductionOrderForm: React.FC = () => {
         options.ukOptions = ['144']; // Updated to match user requirements
       }
     }
-    
     if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'full-wrap' && packSize === '24') {
       options.euroOptions = ['90'];
       options.ukOptions = ['117'];
     }
-    
     if (canSize === '500ml-base' && packagingType === 'full-wrap' && packSize === '12') {
       options.euroOptions = ['144'];
       options.ukOptions = ['176'];
     }
-    
     return options;
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -272,10 +258,11 @@ const ProductionOrderForm: React.FC = () => {
       });
       return;
     }
-
     try {
       // Send emails via the edge function
-      const { error } = await supabase.functions.invoke('send-production-order', {
+      const {
+        error
+      } = await supabase.functions.invoke('send-production-order', {
         body: {
           orderData: {
             ...formData,
@@ -284,7 +271,6 @@ const ProductionOrderForm: React.FC = () => {
           }
         }
       });
-
       if (error) {
         console.error('Error sending emails:', error);
         toast({
@@ -294,7 +280,6 @@ const ProductionOrderForm: React.FC = () => {
         });
         return;
       }
-
       toast({
         title: "Order Submitted Successfully!",
         description: `Order for ${formData.productDescription} has been submitted. Email confirmations have been sent to you and our team.`
@@ -554,16 +539,11 @@ const ProductionOrderForm: React.FC = () => {
 
                 {/* Palletization - Dynamic based on configuration */}
                 {(() => {
-                  const palletOptions = getPalletizationOptions();
-                  const showPalletization = formData.canSize && formData.packagingType && 
-                    ((formData.packagingType === 'tray' && (formData.packagingVariant === '24pcs-tray' || formData.packagingVariant === '12pcs-tray' || formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray')) ||
-                     (formData.packagingType === 'full-wrap' && (formData.packagingVariant === 'full-wrap-24' || formData.packagingVariant === 'full-wrap-12' || formData.fullWrapPack)));
-
-                  if (!showPalletization) return null;
-
-                 if (palletOptions.isUnsupported) {
-                   return (
-                     <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+              const palletOptions = getPalletizationOptions();
+              const showPalletization = formData.canSize && formData.packagingType && (formData.packagingType === 'tray' && (formData.packagingVariant === '24pcs-tray' || formData.packagingVariant === '12pcs-tray' || formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') || formData.packagingType === 'full-wrap' && (formData.packagingVariant === 'full-wrap-24' || formData.packagingVariant === 'full-wrap-12' || formData.fullWrapPack));
+              if (!showPalletization) return null;
+              if (palletOptions.isUnsupported) {
+                return <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                        <div className="flex items-center gap-2 text-destructive">
                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -573,16 +553,12 @@ const ProductionOrderForm: React.FC = () => {
                        <p className="text-sm text-destructive mt-1">
                          {palletOptions.errorMessage}
                        </p>
-                     </div>
-                   );
-                 }
-
-                 if (palletOptions.euroOptions.length === 0 && palletOptions.ukOptions.length === 0) {
-                   return null;
-                 }
-
-                 return (
-                   <div className="mt-6 space-y-4">
+                     </div>;
+              }
+              if (palletOptions.euroOptions.length === 0 && palletOptions.ukOptions.length === 0) {
+                return null;
+              }
+              return <div className="mt-6 space-y-4">
                      <h4 className="font-semibold text-lg">Palletization</h4>
                      <div>
                        <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type</Label>
@@ -591,19 +567,14 @@ const ProductionOrderForm: React.FC = () => {
                            <SelectValue placeholder="Select pallet type" />
                          </SelectTrigger>
                          <SelectContent>
-                           {palletOptions.euroOptions.length > 0 && (
-                             <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>
-                           )}
-                           {palletOptions.ukOptions.length > 0 && (
-                             <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
-                           )}
+                           {palletOptions.euroOptions.length > 0 && <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>}
+                           {palletOptions.ukOptions.length > 0 && <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>}
                          </SelectContent>
                        </Select>
                      </div>
 
                      {/* Conditional Tray Count for Pallets */}
-                     {formData.palletType && (
-                       <div>
+                     {formData.palletType && <div>
                          <Label className="text-sm font-medium">
                            {formData.packagingType === 'full-wrap' && formData.fullWrapPack === '12-pack' ? 'Trays Wraps per Pallet' : 'Trays per Pallet'}
                          </Label>
@@ -612,20 +583,15 @@ const ProductionOrderForm: React.FC = () => {
                              <SelectValue placeholder="Select tray count" />
                            </SelectTrigger>
                            <SelectContent>
-                             {formData.palletType === 'euro-pallet' && palletOptions.euroOptions.map(option => (
-                               <SelectItem key={option} value={option}>
+                             {formData.palletType === 'euro-pallet' && palletOptions.euroOptions.map(option => <SelectItem key={option} value={option}>
                                  {option} {formData.packagingType === 'full-wrap' && formData.fullWrapPack === '12-pack' ? 'Trays Wraps' : 'Trays'} per Euro Pallet
-                               </SelectItem>
-                             ))}
-                             {formData.palletType === 'uk-pallet' && palletOptions.ukOptions.map(option => (
-                               <SelectItem key={option} value={option}>
+                               </SelectItem>)}
+                             {formData.palletType === 'uk-pallet' && palletOptions.ukOptions.map(option => <SelectItem key={option} value={option}>
                                  {option} {formData.packagingType === 'full-wrap' && formData.fullWrapPack === '12-pack' ? 'Trays Wraps' : 'Trays'} per UK Pallet
-                               </SelectItem>
-                             ))}
+                               </SelectItem>)}
                            </SelectContent>
                          </Select>
-                       </div>
-                     )}
+                       </div>}
 
                      {/* Protection Options */}
                      <div>
@@ -643,9 +609,8 @@ const ProductionOrderForm: React.FC = () => {
                          </div>
                        </RadioGroup>
                      </div>
-                   </div>
-                 );
-               })()}
+                   </div>;
+            })()}
             </CardContent>
             </Card>
 
@@ -821,12 +786,10 @@ const ProductionOrderForm: React.FC = () => {
                       </div>
                     </div>
                   </RadioGroup>
-                  {formData.containsAllergens === 'yes' && (
-                    <div className="mt-4">
+                  {formData.containsAllergens === 'yes' && <div className="mt-4">
                       <Label htmlFor="allergenDetails" className="text-sm font-medium">Which Allergens?</Label>
                       <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
-                    </div>
-                  )}
+                    </div>}
                 </div>
               </div>
             </CardContent>
@@ -949,7 +912,7 @@ const ProductionOrderForm: React.FC = () => {
                    </div>
 
                    <div>
-                     <Label className="text-sm font-medium">Tray EAN Code is printed on the tray</Label>
+                     <Label className="text-sm font-medium">Tray EAN Code printed on the tray</Label>
                      <RadioGroup value={formData.trayEanCodePrinted || ''} onValueChange={value => handleInputChange('trayEanCodePrinted', value)}>
                        <div className="flex items-center space-x-4 mt-2">
                          <div className="flex items-center space-x-2">
@@ -983,16 +946,10 @@ const ProductionOrderForm: React.FC = () => {
                <div>
                  <Label className="text-sm font-medium mb-3 block">Where will you bring the goods? (Multiple selections possible)</Label>
                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                   {['European Union', 'Outside of European Union', 'Austria'].map(destination => (
-                     <div key={destination} className="flex items-center space-x-2">
-                       <Checkbox 
-                         id={destination} 
-                         checked={formData.deliveryDestinations.includes(destination)} 
-                         onCheckedChange={checked => handleDeliveryDestinationChange(destination, checked as boolean)} 
-                       />
+                   {['European Union', 'Outside of European Union', 'Austria'].map(destination => <div key={destination} className="flex items-center space-x-2">
+                       <Checkbox id={destination} checked={formData.deliveryDestinations.includes(destination)} onCheckedChange={checked => handleDeliveryDestinationChange(destination, checked as boolean)} />
                        <Label htmlFor={destination} className="text-sm font-medium">{destination}</Label>
-                     </div>
-                   ))}
+                     </div>)}
                  </div>
                </div>
              </CardContent>
