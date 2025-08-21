@@ -419,14 +419,8 @@ const ProductionOrderForm: React.FC = () => {
                   <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
                 </div>}
 
-              {/* Other Field */}
-              <div>
-                <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
-                <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1 max-w-xs" />
-              </div>
-
               {/* Pasteurization Options */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <Label className="text-sm font-medium">Pasteurization</Label>
                   <RadioGroup value={formData.pasteurization} onValueChange={value => handleInputChange('pasteurization', value)}>
@@ -457,6 +451,11 @@ const ProductionOrderForm: React.FC = () => {
                       </div>
                     </div>
                   </RadioGroup>
+                </div>
+                
+                <div>
+                  <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
+                  <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1 max-w-xs" />
                 </div>
               </div>
             </CardContent>
