@@ -260,9 +260,7 @@ const ProductionOrderForm: React.FC = () => {
     }
     try {
       // Send emails via the edge function
-      const {
-        error
-      } = await supabase.functions.invoke('send-production-order', {
+      const { data, error } = await supabase.functions.invoke('send-production-order', {
         body: {
           orderData: {
             ...formData,
@@ -271,6 +269,7 @@ const ProductionOrderForm: React.FC = () => {
           }
         }
       });
+      
       if (error) {
         console.error('Error sending emails:', error);
         toast({
@@ -280,6 +279,20 @@ const ProductionOrderForm: React.FC = () => {
         });
         return;
       }
+
+      // Check if the response indicates an error
+      if (data && data.error) {
+        console.error('Email service error:', data.error);
+        toast({
+          title: "Email Error",
+          description: data.error === 'Email service not configured' ? 
+            "Email service is not properly configured. Please contact support." :
+            "There was an issue sending the email notifications. Please contact support.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       toast({
         title: "Order Submitted Successfully!",
         description: `Order for ${formData.productDescription} has been submitted. Email confirmations have been sent to you and our team.`

@@ -32,12 +32,26 @@ serve(async (req) => {
   }
 
   try {
+    console.log('RESEND_API_KEY available:', !!RESEND_API_KEY)
+    
     const { orderData }: { orderData: OrderData } = await req.json()
+    console.log('Received order data:', { 
+      orderNumber: orderData.orderNumber, 
+      customerEmail: orderData.customerEmail 
+    })
 
     if (!orderData.customerEmail) {
       return new Response(
         JSON.stringify({ error: 'Customer email is required' }), 
         { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
+    if (!RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not configured')
+      return new Response(
+        JSON.stringify({ error: 'Email service not configured' }), 
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
       )
     }
 
