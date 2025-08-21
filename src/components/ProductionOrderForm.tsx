@@ -475,7 +475,7 @@ const ProductionOrderForm: React.FC = () => {
                         <div>
                           <p className="font-medium">Example European Format:</p>
                           <p>Line 1: DD.MM.YYYY HH:MM</p>
-                          <p>Line 2: MM.DD.YYYY L/DDDMM</p>
+                          <p>Line 2: DD.MM.YYYY L/DDDMM</p>
                         </div>
                         <div>
                           <p className="font-medium">Example US Format:</p>
