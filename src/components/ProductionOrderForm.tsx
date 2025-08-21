@@ -441,14 +441,22 @@ const ProductionOrderForm: React.FC = () => {
               {/* Writing/Diction */}
               <div>
                 <Label className="text-sm font-medium mb-3 block">Writing/Diction (on the bottom of cans)</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
-                    <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
+                  <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
+                      <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
+                    </div>
+                    <div>
+                      <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
+                      <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
+                    </div>
                   </div>
-                  <div>
-                    <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
-                    <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
+                  <div className="text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg">
+                    <div className="space-y-1">
+                      <div><strong>Line 1:</strong> PROD: DD.MM.YYYY HH:MM</div>
+                      <div><strong>Line 2:</strong> EXP:DD.MM.YYYY L/DDDYY</div>
+                    </div>
                   </div>
                 </div>
               </div>
