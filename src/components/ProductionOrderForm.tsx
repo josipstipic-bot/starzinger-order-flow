@@ -501,7 +501,6 @@ const ProductionOrderForm: React.FC = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>
-                    <SelectItem value="container-pallet">Container-pallet (tray per pallet)</SelectItem>
                     <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
                   </SelectContent>
                 </Select>
