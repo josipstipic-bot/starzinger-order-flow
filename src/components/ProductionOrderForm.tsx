@@ -27,6 +27,7 @@ interface OrderFormData {
   canSize: string;
 
   // Packaging Options
+  packagingType: string;
   packagingVariant: string;
   fullWrapPack: string;
 
@@ -99,6 +100,7 @@ const ProductionOrderForm: React.FC = () => {
     quantityTrays: '',
     specialFilling: [],
     canSize: '',
+    packagingType: '',
     packagingVariant: '',
     fullWrapPack: '',
     topVariant: '',
@@ -180,6 +182,7 @@ const ProductionOrderForm: React.FC = () => {
       quantityTrays: '',
       specialFilling: [],
       canSize: '',
+      packagingType: '',
       packagingVariant: '',
       fullWrapPack: '',
       topVariant: '',
@@ -327,30 +330,75 @@ const ProductionOrderForm: React.FC = () => {
               </div>
               
               <div>
-                <Label className="text-sm font-medium mb-3 block">Packaging Option Tray</Label>
-                <RadioGroup value={formData.packagingVariant} onValueChange={value => handleInputChange('packagingVariant', value)}>
+                <Label className="text-sm font-medium mb-3 block">Packaging Type</Label>
+                <RadioGroup value={formData.packagingType || ''} onValueChange={value => handleInputChange('packagingType', value)}>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
-                    <Label htmlFor="24pcs-tray">24 Pack</Label>
+                    <RadioGroupItem value="tray" id="packaging-tray" />
+                    <Label htmlFor="packaging-tray">Tray</Label>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="12pcs-tray" id="12pcs-tray" />
-                    <Label htmlFor="12pcs-tray">12 Pack</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="overfoil" id="overfoil" />
-                    <Label htmlFor="overfoil">4Pack with Overfoil</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
-                    <Label htmlFor="6pcs-tray">6Pack with Overfoil</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="full-wrap" id="full-wrap" />
-                    <Label htmlFor="full-wrap">Full Wrap</Label>
+                    <RadioGroupItem value="full-wrap" id="packaging-full-wrap" />
+                    <Label htmlFor="packaging-full-wrap">Full Wrap</Label>
                   </div>
                 </RadioGroup>
               </div>
+              
+              {/* Conditional Pack Size Selection */}
+              {formData.packagingType && (
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">
+                    {formData.packagingType === 'tray' ? 'Tray Pack Size' : 'Full Wrap Pack Size'}
+                  </Label>
+                  <RadioGroup value={formData.packagingVariant} onValueChange={value => handleInputChange('packagingVariant', value)}>
+                    {formData.packagingType === 'tray' && (
+                      <>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
+                          <Label htmlFor="24pcs-tray">24 Pack</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="12pcs-tray" id="12pcs-tray" />
+                          <Label htmlFor="12pcs-tray">12 Pack</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="overfoil" id="overfoil" />
+                          <Label htmlFor="overfoil">4Pack with Overfoil</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
+                          <Label htmlFor="6pcs-tray">6Pack with Overfoil</Label>
+                        </div>
+                      </>
+                    )}
+                    {formData.packagingType === 'full-wrap' && (
+                      <>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="full-wrap-24" id="full-wrap-24" />
+                          <Label htmlFor="full-wrap-24">24 Pack</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="full-wrap-12" id="full-wrap-12" />
+                          <Label htmlFor="full-wrap-12">12 Pack</Label>
+                        </div>
+                      </>
+                    )}
+                  </RadioGroup>
+                </div>
+              )}
+              {/* MOQ Notification for 250ml Slim + 12 Pack Tray */}
+              {formData.canSize === '250ml-slim' && formData.packagingType === 'tray' && formData.packagingVariant === '12pcs-tray' && (
+                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center gap-2 text-blue-800">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="font-medium">MOQ Information</span>
+                  </div>
+                  <p className="text-sm text-blue-700 mt-1">
+                    For 250ml Slim cans with 12 Pack tray configuration, the Minimum Order Quantity (MOQ) is 400,000 cans.
+                  </p>
+                </div>
+              )}
             </CardContent>
             </Card>
 
