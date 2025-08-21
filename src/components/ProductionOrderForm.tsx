@@ -509,23 +509,40 @@ const ProductionOrderForm: React.FC = () => {
                 </Select>
                </div>
 
-               {/* Conditional Tray Count for Euro Pallet */}
-               {formData.palletType === 'euro-pallet' && (formData.canSize === '250ml-slim' || formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && (
+               {/* Conditional Tray Count for Pallets */}
+               {formData.palletType && formData.canSize && (
                  <div>
-                   <Label className="text-sm font-medium">Trays per Euro Pallet</Label>
+                   <Label className="text-sm font-medium">Trays per Pallet</Label>
                    <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
                      <SelectTrigger className="mt-1">
                        <SelectValue placeholder="Select tray count" />
                      </SelectTrigger>
                      <SelectContent>
-                       {formData.canSize === '250ml-slim' && (
+                       {/* 250ml Slim options */}
+                       {formData.canSize === '250ml-slim' && formData.palletType === 'euro-pallet' && (
                          <>
                            <SelectItem value="108">108 Trays per Euro Pallet</SelectItem>
                            <SelectItem value="120">120 Trays per Euro Pallet</SelectItem>
                          </>
                        )}
-                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && (
+                       {formData.canSize === '250ml-slim' && formData.palletType === 'uk-pallet' && (
+                         <SelectItem value="160">160 Trays per UK Pallet</SelectItem>
+                       )}
+                       
+                       {/* 330ml/355ml Sleek options */}
+                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'euro-pallet' && (
                          <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>
+                       )}
+                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'uk-pallet' && (
+                         <SelectItem value="104">104 Trays per UK Pallet</SelectItem>
+                       )}
+                       
+                       {/* 500ml Base options */}
+                       {formData.canSize === '500ml-base' && formData.palletType === 'euro-pallet' && (
+                         <SelectItem value="72">72 Trays per Euro Pallet</SelectItem>
+                       )}
+                       {formData.canSize === '500ml-base' && formData.palletType === 'uk-pallet' && (
+                         <SelectItem value="90">90 Trays per UK Pallet</SelectItem>
                        )}
                      </SelectContent>
                    </Select>
