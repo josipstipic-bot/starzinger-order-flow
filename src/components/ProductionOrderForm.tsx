@@ -493,7 +493,7 @@ const ProductionOrderForm: React.FC = () => {
 
               {/* Palletization */}
               <div>
-                <Label htmlFor="palletType" className="text-sm font-medium">Writing/Diction (on the bottom of cans - max. 22 signs)
+                <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type
               </Label>
                 <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
                   <SelectTrigger className="mt-1">
