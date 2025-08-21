@@ -350,8 +350,7 @@ const ProductionOrderForm: React.FC = () => {
             </Card>
 
           {/* Full Wrap Pack Size Selection */}
-          {formData.packagingVariant === 'full-wrap' && (
-            <Card className="shadow-soft">
+          {formData.packagingVariant === 'full-wrap' && <Card className="shadow-soft">
               <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
                 <CardTitle className="text-primary flex items-center gap-2">
                   <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">!</span>
@@ -361,7 +360,7 @@ const ProductionOrderForm: React.FC = () => {
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   <Label className="text-sm font-medium">Select Pack Size for Full Wrap</Label>
-                  <RadioGroup value={formData.fullWrapPack} onValueChange={(value) => handleInputChange('fullWrapPack', value)}>
+                  <RadioGroup value={formData.fullWrapPack} onValueChange={value => handleInputChange('fullWrapPack', value)}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="24-pack" id="full-wrap-24" />
                       <Label htmlFor="full-wrap-24">24 Pack</Label>
@@ -373,8 +372,7 @@ const ProductionOrderForm: React.FC = () => {
                   </RadioGroup>
                   
                   {/* Configuration Warning */}
-                  {formData.canSize === '250ml-slim' && formData.fullWrapPack === '12-pack' && (
-                    <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                  {formData.canSize === '250ml-slim' && formData.fullWrapPack === '12-pack' && <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                       <div className="flex items-center gap-2 text-destructive">
                         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -384,12 +382,10 @@ const ProductionOrderForm: React.FC = () => {
                       <p className="text-sm text-destructive mt-1">
                         The combination of 250ml Slim cans with 12 Pack Full Wrap is not supported. Please choose a different can size or pack configuration.
                       </p>
-                    </div>
-                  )}
+                    </div>}
                 </div>
               </CardContent>
-            </Card>
-          )}
+            </Card>}
 
           {/* Conditional Foil Layout Number Field */}
           {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && <Card className="shadow-soft">
@@ -732,10 +728,7 @@ const ProductionOrderForm: React.FC = () => {
               </div>
 
               {/* Delivery Date */}
-              <div>
-                <Label htmlFor="deliveryDate" className="text-sm font-medium">Delivery Date of Compounds</Label>
-                <Input id="deliveryDate" type="date" value={formData.deliveryDate} onChange={e => handleInputChange('deliveryDate', e.target.value)} className="mt-1" />
-              </div>
+              
             </CardContent>
           </Card>
 
