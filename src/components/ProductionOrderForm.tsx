@@ -349,7 +349,6 @@ const ProductionOrderForm: React.FC = () => {
                       <SelectItem value="silver-top-silver-lid">Silver Top - Silver Lid</SelectItem>
                       <SelectItem value="silver-top-blue-lid">Silver Top - Blue Lid</SelectItem>
                       <SelectItem value="silver-top-red-lid">Silver Top - Red Lid</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -360,7 +359,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="bpaniNextGen" className="text-sm font-medium">BPANI (NexGen) Top</Label>
+                  
                   <RadioGroup value={formData.bpaniNextGen} onValueChange={value => handleInputChange('bpaniNextGen', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
@@ -384,7 +383,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="recipeOther" className="text-sm font-medium">CO2 content</Label>
+                  <Label htmlFor="recipeOther" className="text-sm font-medium">CO2 content in g/L </Label>
                   <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1" />
                 </div>
               </div>
@@ -472,7 +471,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 <div className="mt-3 text-sm text-muted-foreground">
                   <p className="font-medium">Example:</p>
-                  <p>Line 1: DD.MM.YYYY HH:MM</p>
+                  <p>Example European Format:</p>
                   <p>Line 2: DD.MM.YYYY L/DDDYY</p>
                 </div>
               </div>
