@@ -322,7 +322,7 @@ const ProductionOrderForm: React.FC = () => {
               </div>
               
               <div>
-                <Label className="text-sm font-medium mb-3 block">Packaging Variant Tray</Label>
+                <Label className="text-sm font-medium mb-3 block">Packaging Option Tray</Label>
                 <RadioGroup value={formData.packagingVariant} onValueChange={value => handleInputChange('packagingVariant', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
