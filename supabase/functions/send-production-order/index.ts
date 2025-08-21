@@ -55,6 +55,8 @@ serve(async (req) => {
       )
     }
 
+    console.log('Starting email process for order:', orderData.orderNumber)
+
     // Format order data for email
     const formatOrderData = (data: OrderData) => {
       return `
@@ -93,6 +95,7 @@ serve(async (req) => {
     }
 
     const emailContent = formatOrderData(orderData)
+    console.log('Email content prepared, making requests to Resend API')
 
     const emailRequests = [
       // Email to Starzinger
@@ -133,6 +136,7 @@ serve(async (req) => {
       }),
     ]
 
+    console.log('Sending emails to Resend API...')
     const responses = await Promise.all(emailRequests)
     
     // Check if both emails were sent successfully
