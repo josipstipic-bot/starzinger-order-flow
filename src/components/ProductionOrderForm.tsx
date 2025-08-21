@@ -456,21 +456,7 @@ const ProductionOrderForm: React.FC = () => {
                   <Input id="topVariantOther" value={formData.topVariantOther || ''} onChange={e => handleInputChange('topVariantOther', e.target.value)} className="mt-1" placeholder="Specify other top variant" />
                 </div>
                 
-                <div>
-                  <Label className="text-sm font-medium">BPani Next Gen</Label>
-                  <RadioGroup value={formData.bpaniNextGen} onValueChange={value => handleInputChange('bpaniNextGen', value)}>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="yes" id="bpani-yes" />
-                        <Label htmlFor="bpani-yes">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id="bpani-no" />
-                        <Label htmlFor="bpani-no">No</Label>
-                      </div>
-                    </div>
-                  </RadioGroup>
-                </div>
+                
               </div>
 
               {/* Recipe & Other */}
