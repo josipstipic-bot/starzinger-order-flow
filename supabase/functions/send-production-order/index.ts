@@ -5,28 +5,169 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+interface OrderData {
+  orderNumber: string
+  submittedAt: string
+  customerNumber: string
+  customerFirstName: string
+  customerLastName: string
+  customerEmail: string
+  orderDate: string
+  productDescription: string
+  articleNumber?: string
+  decorationNumber?: string
+  canSize?: string
+  packagingType?: string
+  packagingVariant?: string
+  specialFilling?: string[]
+  abvPercentage?: string
+  topVariant?: string
+  recipeNumber?: string
+  pasteurization?: string
+  flashPasteurization?: string
+  containsAllergens?: string
+  additionalInfo?: string
+  [key: string]: any
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
 
+  if (req.method !== 'POST') {
+    return new Response('Method not allowed', { status: 405, headers: corsHeaders })
+  }
+
   try {
-    console.log('Basic function test - started')
+    console.log('Function started')
     
+    const requestBody = await req.json()
+    const { orderData }: { orderData: OrderData } = requestBody
+    
+    if (!orderData || !orderData.customerEmail) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required data' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
+    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
+    if (!RESEND_API_KEY) {
+      return new Response(
+        JSON.stringify({ error: 'API key not configured' }),
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
+    console.log('Sending emails for order:', orderData.orderNumber)
+
+    // Format order details for email
+    const formatOrderData = (data: OrderData) => {
+      return `
+        <h2>Production Order Specification</h2>
+        <p><strong>Order Number:</strong> ${data.orderNumber}</p>
+        <p><strong>Submitted:</strong> ${new Date(data.submittedAt).toLocaleString()}</p>
+        
+        <h3>Customer Information</h3>
+        <p><strong>Company:</strong> ${data.customerNumber}</p>
+        <p><strong>Contact:</strong> ${data.customerFirstName} ${data.customerLastName}</p>
+        <p><strong>Email:</strong> ${data.customerEmail}</p>
+        <p><strong>Order Date:</strong> ${data.orderDate}</p>
+        
+        <h3>Product Information</h3>
+        <p><strong>Product Description:</strong> ${data.productDescription}</p>
+        <p><strong>Article Number:</strong> ${data.articleNumber || 'N/A'}</p>
+        <p><strong>Can Layout Number:</strong> ${data.decorationNumber || 'N/A'}</p>
+        
+        <h3>Specifications</h3>
+        <p><strong>Can Size:</strong> ${data.canSize || 'N/A'}</p>
+        <p><strong>Packaging Type:</strong> ${data.packagingType || 'N/A'}</p>
+        <p><strong>Packaging Variant:</strong> ${data.packagingVariant || 'N/A'}</p>
+        <p><strong>Special Filling:</strong> ${data.specialFilling?.join(', ') || 'None'}</p>
+        
+        ${data.abvPercentage ? `<p><strong>ABV:</strong> ${data.abvPercentage}%</p>` : ''}
+        
+        <h3>Technical Details</h3>
+        <p><strong>Top Variant:</strong> ${data.topVariant || 'N/A'}</p>
+        <p><strong>Recipe Number:</strong> ${data.recipeNumber || 'N/A'}</p>
+        <p><strong>Pasteurization:</strong> ${data.pasteurization || 'N/A'}</p>
+        <p><strong>Flash Pasteurization:</strong> ${data.flashPasteurization || 'N/A'}</p>
+        <p><strong>Contains Allergens:</strong> ${data.containsAllergens || 'N/A'}</p>
+        
+        ${data.additionalInfo ? `<h3>Additional Information</h3><p>${data.additionalInfo}</p>` : ''}
+      `
+    }
+
+    const emailContent = formatOrderData(orderData)
+
+    // Send customer confirmation email
+    const customerResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Production Orders <onboarding@resend.dev>',
+        to: [orderData.customerEmail],
+        subject: `Production Order Confirmation - ${orderData.orderNumber}`,
+        html: `
+          <h2>Thank you for your order!</h2>
+          <p>Dear ${orderData.customerFirstName} ${orderData.customerLastName},</p>
+          <p>We have received your production order specification. Here are the details:</p>
+          ${emailContent}
+          <p>We will process your order and get back to you soon.</p>
+          <p>Best regards,<br>Starzinger Team</p>
+        `,
+      }),
+    })
+
+    // Send company notification email
+    const companyResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Production Orders <onboarding@resend.dev>',
+        to: ['pl@starzinger.com'],
+        subject: `New Production Order Specification - ${orderData.orderNumber}`,
+        html: emailContent,
+      }),
+    })
+
+    const customerResult = await customerResponse.json()
+    const companyResult = await companyResponse.json()
+
+    console.log('Customer email:', customerResponse.status, customerResult)
+    console.log('Company email:', companyResponse.status, companyResult)
+
+    // Check if emails were sent successfully
+    if (!customerResponse.ok || !companyResponse.ok) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Failed to send emails',
+          details: {
+            customer: { status: customerResponse.status, result: customerResult },
+            company: { status: companyResponse.status, result: companyResult }
+          }
+        }),
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Function is working - email functionality temporarily disabled for testing',
-        timestamp: new Date().toISOString()
+        message: 'Order sent successfully to both recipients'
       }),
-      { 
-        status: 200, 
-        headers: { 'Content-Type': 'application/json', ...corsHeaders } 
-      }
+      { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
     )
-    
+
   } catch (error) {
-    console.error('Basic function error:', error)
+    console.error('Function error:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
