@@ -468,7 +468,7 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
                     <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
-                  <div>
+                  <div className="max-w-xs">
                     <Label htmlFor="expiryDate" className="text-xs text-muted-foreground">Expiry in Months:</Label>
                     <Input id="expiryDate" value={formData.expiryDate} onChange={e => handleInputChange('expiryDate', e.target.value)} className="mt-1" />
                   </div>
