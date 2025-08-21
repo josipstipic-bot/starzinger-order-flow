@@ -38,6 +38,7 @@ interface OrderFormData {
   recipeNumber: string;
   containsAllergens: string;
   allergenDetails: string;
+  recipeOther: string;
 
   // Dates & Processing
   expiryDate: string;
@@ -91,6 +92,7 @@ const ProductionOrderForm: React.FC = () => {
     recipeNumber: '',
     containsAllergens: '',
     allergenDetails: '',
+    recipeOther: '',
     expiryDate: '',
     pasteurization: '',
     flashPasteurization: '',
@@ -165,6 +167,7 @@ const ProductionOrderForm: React.FC = () => {
       recipeNumber: '',
       containsAllergens: '',
       allergenDetails: '',
+      recipeOther: '',
       expiryDate: '',
       pasteurization: '',
       flashPasteurization: '',
@@ -415,6 +418,12 @@ const ProductionOrderForm: React.FC = () => {
                   <Label htmlFor="allergenDetails" className="text-sm font-medium">Which Allergens?</Label>
                   <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
                 </div>}
+
+              {/* Other Field */}
+              <div>
+                <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
+                <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1" />
+              </div>
 
               {/* Pasteurization Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
