@@ -126,10 +126,10 @@ const ProductionOrderForm: React.FC = () => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.customerNumber || !formData.productDescription || !formData.quantityCans) {
+    if (!formData.customerNumber || !formData.productDescription) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields (Customer Name, Product Description, and Quantity Cans).",
+        description: "Please fill in all required fields (Customer Name and Product Description).",
         variant: "destructive"
       });
       return;
@@ -262,17 +262,6 @@ const ProductionOrderForm: React.FC = () => {
                   value={formData.decorationNumber}
                   onChange={(e) => handleInputChange('decorationNumber', e.target.value)}
                   className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="quantityCans" className="text-sm font-medium">Quantity Cans *</Label>
-                <Input
-                  id="quantityCans"
-                  type="number"
-                  value={formData.quantityCans}
-                  onChange={(e) => handleInputChange('quantityCans', e.target.value)}
-                  className="mt-1"
-                  required
                 />
               </div>
               <div>
