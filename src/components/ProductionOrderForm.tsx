@@ -170,8 +170,8 @@ const ProductionOrderForm: React.FC = () => {
       else if (packagingVariant === 'overfoil') packSize = '4';
       else if (packagingVariant === '6pcs-tray') packSize = '6';
     } else if (packagingType === 'full-wrap') {
-      if (fullWrapPack === '24-pack') packSize = '24';
-      else if (fullWrapPack === '12-pack') packSize = '12';
+      if (packagingVariant === 'full-wrap-24' || fullWrapPack === '24-pack') packSize = '24';
+      else if (packagingVariant === 'full-wrap-12' || fullWrapPack === '12-pack') packSize = '12';
     }
     
     // Define all the configuration rules
@@ -515,14 +515,14 @@ const ProductionOrderForm: React.FC = () => {
                    </p>
                  </div>}
 
-               {/* Palletization - Dynamic based on configuration */}
-               {(() => {
-                 const palletOptions = getPalletizationOptions();
-                 const showPalletization = formData.canSize && formData.packagingType && 
-                   ((formData.packagingType === 'tray' && (formData.packagingVariant === '24pcs-tray' || formData.packagingVariant === '12pcs-tray' || formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray')) ||
-                    (formData.packagingType === 'full-wrap' && formData.fullWrapPack));
+                {/* Palletization - Dynamic based on configuration */}
+                {(() => {
+                  const palletOptions = getPalletizationOptions();
+                  const showPalletization = formData.canSize && formData.packagingType && 
+                    ((formData.packagingType === 'tray' && (formData.packagingVariant === '24pcs-tray' || formData.packagingVariant === '12pcs-tray' || formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray')) ||
+                     (formData.packagingType === 'full-wrap' && (formData.packagingVariant === 'full-wrap-24' || formData.packagingVariant === 'full-wrap-12' || formData.fullWrapPack)));
 
-                 if (!showPalletization) return null;
+                  if (!showPalletization) return null;
 
                  if (palletOptions.isUnsupported) {
                    return (
