@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 interface OrderFormData {
   // Customer Information
   customerNumber: string;
@@ -259,7 +260,7 @@ const ProductionOrderForm: React.FC = () => {
     return options;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Basic validation
@@ -272,65 +273,89 @@ const ProductionOrderForm: React.FC = () => {
       return;
     }
 
-    // Store the order data (in a real app, this would be sent to a backend)
-    localStorage.setItem('latestOrder', JSON.stringify({
-      ...formData,
-      orderNumber: `SZ${Date.now()}`,
-      submittedAt: new Date().toISOString()
-    }));
-    toast({
-      title: "Order Submitted Successfully!",
-      description: `Order for ${formData.productDescription} has been submitted. You'll receive a confirmation email shortly.`
-    });
+    try {
+      // Send emails via the edge function
+      const { error } = await supabase.functions.invoke('send-production-order', {
+        body: {
+          orderData: {
+            ...formData,
+            orderNumber: `SZ${Date.now()}`,
+            submittedAt: new Date().toISOString()
+          }
+        }
+      });
 
-    // Reset form
-    setFormData({
-      customerNumber: '',
-      customerId: '',
-      customerFirstName: '',
-      customerLastName: '',
-      customerEmail: '',
-      orderDate: new Date().toISOString().split('T')[0],
-      articleNumber: '',
-      productDescription: '',
-      decorationNumber: '',
-      quantityCans: '',
-      quantityTrays: '',
-      specialFilling: [],
-      canSize: '',
-      packagingType: '',
-      packagingVariant: '',
-      fullWrapPack: '',
-      topVariant: '',
-      topVariantOther: '',
-      bpaniNextGen: '',
-      recipeNumber: '',
-      containsAllergens: '',
-      allergenDetails: '',
-      recipeOther: '',
-      expiryDate: '',
-      pasteurization: '',
-      flashPasteurization: '',
-      writingLine1: '',
-      writingLine2: '',
-      palletType: '',
-      traysPerPallet: '',
-      doubleWrapping: '',
-      trayType: '',
-      trayColor: '',
-      trayNumber: '',
-      eanUpcCan: '',
-      eanUpcTray: '',
-      eanSticker: '',
-      additionalInfo: '',
-      abvPercentage: '',
-      deliveryDate: '',
-      deliveryDestinations: [],
-      foilLayoutNumber: '',
-      eanUpc4Pack6Pack: '',
-      fourPack6PackEanSticker: '',
-      trayEanCodePrinted: ''
-    });
+      if (error) {
+        console.error('Error sending emails:', error);
+        toast({
+          title: "Email Error",
+          description: "There was an issue sending the email notifications. Please contact support.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      toast({
+        title: "Order Submitted Successfully!",
+        description: `Order for ${formData.productDescription} has been submitted. Email confirmations have been sent to you and our team.`
+      });
+
+      // Reset form
+      setFormData({
+        customerNumber: '',
+        customerId: '',
+        customerFirstName: '',
+        customerLastName: '',
+        customerEmail: '',
+        orderDate: new Date().toISOString().split('T')[0],
+        articleNumber: '',
+        productDescription: '',
+        decorationNumber: '',
+        quantityCans: '',
+        quantityTrays: '',
+        specialFilling: [],
+        canSize: '',
+        packagingType: '',
+        packagingVariant: '',
+        fullWrapPack: '',
+        topVariant: '',
+        topVariantOther: '',
+        bpaniNextGen: '',
+        recipeNumber: '',
+        containsAllergens: '',
+        allergenDetails: '',
+        recipeOther: '',
+        expiryDate: '',
+        pasteurization: '',
+        flashPasteurization: '',
+        writingLine1: '',
+        writingLine2: '',
+        palletType: '',
+        traysPerPallet: '',
+        doubleWrapping: '',
+        trayType: '',
+        trayColor: '',
+        trayNumber: '',
+        eanUpcCan: '',
+        eanUpcTray: '',
+        eanSticker: '',
+        additionalInfo: '',
+        abvPercentage: '',
+        deliveryDate: '',
+        deliveryDestinations: [],
+        foilLayoutNumber: '',
+        eanUpc4Pack6Pack: '',
+        fourPack6PackEanSticker: '',
+        trayEanCodePrinted: ''
+      });
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      toast({
+        title: "Submission Error",
+        description: "There was an error submitting your order. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
   return <div className="min-h-screen bg-gradient-subtle">
       <div className="container mx-auto px-4 py-8">
