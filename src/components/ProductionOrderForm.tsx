@@ -859,15 +859,15 @@ const ProductionOrderForm: React.FC = () => {
                   </Select>
                 </div>
                 
-                <div>
+                {formData.trayType === 'neutral' && <div>
                   <Label htmlFor="trayColor" className="text-sm font-medium">Tray Color</Label>
                   <Input id="trayColor" value={formData.trayColor} onChange={e => handleInputChange('trayColor', e.target.value)} className="mt-1" />
-                </div>
+                </div>}
                 
-                <div>
+                {formData.trayType === 'printed' && <div>
                   <Label htmlFor="trayNumber" className="text-sm font-medium">Tray/Full-Wrap Layout Number</Label>
                   <Input id="trayNumber" value={formData.trayNumber} onChange={e => handleInputChange('trayNumber', e.target.value)} className="mt-1" />
-                </div>
+                </div>}
               </div>
             </CardContent>
           </Card>
