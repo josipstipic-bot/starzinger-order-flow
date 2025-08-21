@@ -74,6 +74,9 @@ interface OrderFormData {
 
   // Delivery Information
   deliveryDate: string;
+
+  // Foil Layout Information
+  foilLayoutNumber: string;
 }
 const ProductionOrderForm: React.FC = () => {
   const [formData, setFormData] = useState<OrderFormData>({
@@ -110,7 +113,8 @@ const ProductionOrderForm: React.FC = () => {
     eanSticker: '',
     additionalInfo: '',
     abvPercentage: '',
-    deliveryDate: ''
+    deliveryDate: '',
+    foilLayoutNumber: ''
   });
   const {
     toast
@@ -186,7 +190,8 @@ const ProductionOrderForm: React.FC = () => {
       eanSticker: '',
       additionalInfo: '',
       abvPercentage: '',
-      deliveryDate: ''
+      deliveryDate: '',
+      foilLayoutNumber: ''
     });
   };
   return <div className="min-h-screen bg-gradient-subtle">
@@ -326,6 +331,31 @@ const ProductionOrderForm: React.FC = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* Conditional Foil Layout Number Field */}
+          {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && (
+            <Card className="shadow-soft">
+              <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
+                <CardTitle className="text-primary flex items-center gap-2">
+                  <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">!</span>
+                  Printed Foil Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div>
+                  <Label htmlFor="foilLayoutNumber" className="text-sm font-medium">Layout Number of the Printed Foil *</Label>
+                  <Input 
+                    id="foilLayoutNumber" 
+                    value={formData.foilLayoutNumber} 
+                    onChange={e => handleInputChange('foilLayoutNumber', e.target.value)} 
+                    className="mt-1 max-w-md" 
+                    placeholder="Enter foil layout number"
+                    required
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Technical Specifications */}
           <Card className="shadow-soft">
