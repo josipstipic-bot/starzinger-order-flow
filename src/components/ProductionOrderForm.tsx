@@ -608,7 +608,7 @@ const ProductionOrderForm: React.FC = () => {
           <Card className="shadow-soft">
             <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5">
               <CardTitle className="text-primary flex items-center gap-2">
-                <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">RTD contains Allergens</span>
+                <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">6</span>
                 Packaging & Labeling
               </CardTitle>
             </CardHeader>
