@@ -51,6 +51,7 @@ interface OrderFormData {
 
   // Palletization
   palletType: string;
+  traysPerPallet: string;
 
   // Protection & Wrapping
   doubleWrapping: string;
@@ -99,6 +100,7 @@ const ProductionOrderForm: React.FC = () => {
     writingLine1: '',
     writingLine2: '',
     palletType: '',
+    traysPerPallet: '',
     doubleWrapping: '',
     trayType: '',
     trayColor: '',
@@ -174,6 +176,7 @@ const ProductionOrderForm: React.FC = () => {
       writingLine1: '',
       writingLine2: '',
       palletType: '',
+      traysPerPallet: '',
       doubleWrapping: '',
       trayType: '',
       trayColor: '',
@@ -504,7 +507,30 @@ const ProductionOrderForm: React.FC = () => {
                     <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+               </div>
+
+               {/* Conditional Tray Count for Euro Pallet */}
+               {formData.palletType === 'euro-pallet' && (formData.canSize === '250ml-slim' || formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && (
+                 <div>
+                   <Label className="text-sm font-medium">Trays per Euro Pallet</Label>
+                   <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
+                     <SelectTrigger className="mt-1">
+                       <SelectValue placeholder="Select tray count" />
+                     </SelectTrigger>
+                     <SelectContent>
+                       {formData.canSize === '250ml-slim' && (
+                         <>
+                           <SelectItem value="108">108 Trays per Euro Pallet</SelectItem>
+                           <SelectItem value="120">120 Trays per Euro Pallet</SelectItem>
+                         </>
+                       )}
+                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && (
+                         <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>
+                       )}
+                     </SelectContent>
+                   </Select>
+                 </div>
+               )}
 
               {/* Protection Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
