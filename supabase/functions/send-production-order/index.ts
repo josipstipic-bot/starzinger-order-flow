@@ -122,13 +122,33 @@ serve(async (req) => {
     const responses = await Promise.all(emailRequests)
     
     // Check if both emails were sent successfully
-    const results = await Promise.all(responses.map(r => r.json()))
+    const results = await Promise.all(responses.map(async (r) => {
+      const result = await r.json()
+      console.log('Email response:', { status: r.status, result })
+      return { status: r.status, result }
+    }))
+    
+    // Check for any failed requests
+    const failedRequests = results.filter(r => r.status !== 200)
+    if (failedRequests.length > 0) {
+      console.error('Failed email requests:', failedRequests)
+      return new Response(
+        JSON.stringify({ 
+          error: 'Some emails failed to send', 
+          details: failedRequests 
+        }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        }
+      )
+    }
     
     return new Response(
       JSON.stringify({ 
         success: true, 
         message: 'Order sent successfully to both recipients',
-        results 
+        results: results.map(r => r.result)
       }),
       { 
         status: 200,
