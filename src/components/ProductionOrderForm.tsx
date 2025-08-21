@@ -129,7 +129,7 @@ const ProductionOrderForm: React.FC = () => {
     if (!formData.customerNumber || !formData.productDescription || !formData.quantityCans) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields (Customer Number, Product Description, and Quantity Cans).",
+        description: "Please fill in all required fields (Customer Name, Product Description, and Quantity Cans).",
         variant: "destructive"
       });
       return;
@@ -206,7 +206,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="customerNumber" className="text-sm font-medium">Customer Number *</Label>
+                <Label htmlFor="customerNumber" className="text-sm font-medium">Customer Name *</Label>
                 <Input
                   id="customerNumber"
                   value={formData.customerNumber}
