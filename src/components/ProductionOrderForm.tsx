@@ -422,7 +422,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Other Field */}
               <div>
                 <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
-                <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1" />
+                <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1 max-w-xs" />
               </div>
 
               {/* Pasteurization Options */}
