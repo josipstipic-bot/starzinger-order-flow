@@ -352,7 +352,7 @@ const ProductionOrderForm: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <Label htmlFor="foilLayoutNumber" className="text-sm font-medium">Layout Number of the Printed Foil *</Label>
                     <Input 
@@ -362,6 +362,16 @@ const ProductionOrderForm: React.FC = () => {
                       className="mt-1" 
                       placeholder="Enter foil layout number"
                       required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="eanUpc4Pack6Pack" className="text-sm font-medium">EAN/UPC 4Pack/ 6Pack</Label>
+                    <Input 
+                      id="eanUpc4Pack6Pack" 
+                      value={formData.eanUpc4Pack6Pack} 
+                      onChange={e => handleInputChange('eanUpc4Pack6Pack', e.target.value)} 
+                      className="mt-1" 
+                      placeholder="Enter EAN/UPC for 4Pack/6Pack"
                     />
                   </div>
                   <div>
@@ -679,22 +689,8 @@ const ProductionOrderForm: React.FC = () => {
                        </div>
                      </RadioGroup>
                    </div>
-                 </div>
-
-                 {/* Conditional EAN/UPC for 4Pack/6Pack */}
-                 {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && (
-                   <div className="mt-4">
-                     <Label htmlFor="eanUpc4Pack6Pack" className="text-sm font-medium">EAN/UPC 4Pack/ 6Pack</Label>
-                     <Input 
-                       id="eanUpc4Pack6Pack" 
-                       value={formData.eanUpc4Pack6Pack} 
-                       onChange={e => handleInputChange('eanUpc4Pack6Pack', e.target.value)} 
-                       className="mt-1 max-w-md" 
-                       placeholder="Enter EAN/UPC for 4Pack/6Pack"
-                     />
-                   </div>
-                 )}
-               </div>
+                </div>
+              </div>
 
               {/* Additional Information */}
               <div>
