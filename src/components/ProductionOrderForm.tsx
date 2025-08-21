@@ -293,6 +293,10 @@ const ProductionOrderForm: React.FC = () => {
                     <RadioGroupItem value="overfoil" id="overfoil" />
                     <Label htmlFor="overfoil">4Pack with Overfoil</Label>
                   </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
+                    <Label htmlFor="6pcs-tray">6 Pack</Label>
+                  </div>
                 </RadioGroup>
               </div>
             </CardContent>
