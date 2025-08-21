@@ -204,7 +204,7 @@ const ProductionOrderForm: React.FC = () => {
     // Now handle supported configurations
     if (canSize === '250ml-slim' && packagingType === 'tray') {
       if (packSize === '24' || packSize === '4' || packSize === '6') {
-        options.euroOptions = ['108'];
+        options.euroOptions = ['108', '120']; // Customer can choose between 108 and 120 for 24 pack
         options.ukOptions = ['160'];
       } else if (packSize === '12') {
         options.euroOptions = ['240'];
