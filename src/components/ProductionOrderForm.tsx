@@ -451,6 +451,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
                   <div className="text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg">
                     <div className="space-y-1">
+                      <div className="font-medium mb-2">Example:</div>
                       <div><strong>Line 1:</strong> PROD: DD.MM.YYYY HH:MM</div>
                       <div><strong>Line 2:</strong> EXP:DD.MM.YYYY L/DDDYY</div>
                     </div>
