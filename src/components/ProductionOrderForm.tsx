@@ -183,15 +183,15 @@ const ProductionOrderForm: React.FC = () => {
     };
     
     // Check for unsupported configurations first
-    if (canSize === '250ml-slim' && packagingType === 'full-wrap') {
-      options.isUnsupported = true;
-      options.errorMessage = 'The combination of 250ml Slim cans with Full Wrap is not supported.';
-      return options;
-    }
-    
     if (canSize === '500ml-base' && packagingType === 'full-wrap' && packSize === '24') {
       options.isUnsupported = true;
       options.errorMessage = 'The combination of 500ml cans with 24 Pack Full Wrap is not supported.';
+      return options;
+    }
+    
+    if (canSize === '250ml-slim' && packagingType === 'full-wrap' && packSize === '12') {
+      options.isUnsupported = true;
+      options.errorMessage = 'The combination of 250ml Slim cans with 12 Pack Full Wrap is not supported.';
       return options;
     }
     
@@ -212,6 +212,11 @@ const ProductionOrderForm: React.FC = () => {
       }
     }
     
+    if (canSize === '250ml-slim' && packagingType === 'full-wrap' && packSize === '24') {
+      options.euroOptions = ['120'];
+      options.ukOptions = []; // UK not supported for this configuration
+    }
+    
     if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'tray') {
       if (packSize === '24' || packSize === '4' || packSize === '6') {
         options.euroOptions = ['90'];
@@ -228,7 +233,7 @@ const ProductionOrderForm: React.FC = () => {
         options.ukOptions = ['90'];
       } else if (packSize === '12') {
         options.euroOptions = ['144'];
-        options.ukOptions = ['176'];
+        options.ukOptions = ['144']; // Updated to match user requirements
       }
     }
     
