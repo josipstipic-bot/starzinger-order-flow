@@ -390,7 +390,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
               </div>
 
-              {/* Recipe & Allergens */}
+              {/* Recipe & Other */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="recipeNumber" className="text-sm font-medium">Recipe Number</Label>
@@ -398,19 +398,8 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label className="text-sm font-medium">Contains Allergens?</Label>
-                  <RadioGroup value={formData.containsAllergens} onValueChange={value => handleInputChange('containsAllergens', value)}>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="yes" id="allergen-yes" />
-                        <Label htmlFor="allergen-yes">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id="allergen-no" />
-                        <Label htmlFor="allergen-no">No</Label>
-                      </div>
-                    </div>
-                  </RadioGroup>
+                  <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
+                  <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1" />
                 </div>
               </div>
 
@@ -419,7 +408,7 @@ const ProductionOrderForm: React.FC = () => {
                   <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
                 </div>}
 
-              {/* Pasteurization Options */}
+              {/* Pasteurization & Allergens */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <Label className="text-sm font-medium">Pasteurization</Label>
@@ -454,8 +443,19 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
-                  <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1 max-w-xs" />
+                  <Label className="text-sm font-medium">Contains Allergens?</Label>
+                  <RadioGroup value={formData.containsAllergens} onValueChange={value => handleInputChange('containsAllergens', value)}>
+                    <div className="flex items-center space-x-4 mt-2">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="allergen-yes" />
+                        <Label htmlFor="allergen-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="allergen-no" />
+                        <Label htmlFor="allergen-no">No</Label>
+                      </div>
+                    </div>
+                  </RadioGroup>
                 </div>
               </div>
             </CardContent>
