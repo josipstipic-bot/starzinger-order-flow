@@ -80,6 +80,7 @@ interface OrderFormData {
 
   // Delivery Information
   deliveryDate: string;
+  deliveryDestinations: string[];
 
   // Foil Layout Information
   foilLayoutNumber: string;
@@ -135,6 +136,7 @@ const ProductionOrderForm: React.FC = () => {
     additionalInfo: '',
     abvPercentage: '',
     deliveryDate: '',
+    deliveryDestinations: [],
     foilLayoutNumber: '',
     eanUpc4Pack6Pack: '',
     fourPack6PackEanSticker: '',
@@ -153,6 +155,13 @@ const ProductionOrderForm: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       specialFilling: checked ? [...prev.specialFilling, value] : prev.specialFilling.filter(item => item !== value)
+    }));
+  };
+
+  const handleDeliveryDestinationChange = (value: string, checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      deliveryDestinations: checked ? [...prev.deliveryDestinations, value] : prev.deliveryDestinations.filter(item => item !== value)
     }));
   };
   // Helper function to get palletization options based on configuration
@@ -316,6 +325,7 @@ const ProductionOrderForm: React.FC = () => {
       additionalInfo: '',
       abvPercentage: '',
       deliveryDate: '',
+      deliveryDestinations: [],
       foilLayoutNumber: '',
       eanUpc4Pack6Pack: '',
       fourPack6PackEanSticker: '',
@@ -871,14 +881,14 @@ const ProductionOrderForm: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* EAN/UPC & Final Details */}
-          <Card className="shadow-soft">
-            <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
-              <CardTitle className="text-primary flex items-center gap-2">
-                <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">7</span>
-                EAN/UPC & Final Details
-              </CardTitle>
-            </CardHeader>
+           {/* EAN/UPC & Final Details */}
+           <Card className="shadow-soft">
+             <CardHeader className="bg-gradient-to-r from-accent/5 to-primary/5">
+               <CardTitle className="text-primary flex items-center gap-2">
+                 <span className="w-8 h-8 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold">7</span>
+                 EAN/UPC & Final Details
+               </CardTitle>
+             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               
                {/* EAN/UPC Information */}
@@ -931,16 +941,43 @@ const ProductionOrderForm: React.FC = () => {
                  </div>
                </div>
 
-              {/* Additional Information */}
-              <div>
-                <Label htmlFor="additionalInfo" className="text-sm font-medium">Additional Information</Label>
-                <Textarea id="additionalInfo" value={formData.additionalInfo} onChange={e => handleInputChange('additionalInfo', e.target.value)} className="mt-1" rows={3} placeholder="Please provide any additional specifications or requirements..." />
-              </div>
+               {/* Additional Information */}
+               <div>
+                 <Label htmlFor="additionalInfo" className="text-sm font-medium">Additional Information</Label>
+                 <Textarea id="additionalInfo" value={formData.additionalInfo} onChange={e => handleInputChange('additionalInfo', e.target.value)} className="mt-1" rows={3} placeholder="Please provide any additional specifications or requirements..." />
+               </div>
 
-              {/* Delivery Date */}
-              
-            </CardContent>
-          </Card>
+               {/* Delivery Date */}
+               
+             </CardContent>
+           </Card>
+
+           {/* Delivery Destinations */}
+           <Card className="shadow-soft">
+             <CardHeader className="bg-gradient-to-r from-primary/5 to-accent/5">
+               <CardTitle className="text-primary flex items-center gap-2">
+                 <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">8</span>
+                 Delivery Destinations
+               </CardTitle>
+             </CardHeader>
+             <CardContent className="pt-6">
+               <div>
+                 <Label className="text-sm font-medium mb-3 block">Where will you bring the goods? (Multiple selections possible)</Label>
+                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                   {['European Union', 'Outside of European Union', 'Austria'].map(destination => (
+                     <div key={destination} className="flex items-center space-x-2">
+                       <Checkbox 
+                         id={destination} 
+                         checked={formData.deliveryDestinations.includes(destination)} 
+                         onCheckedChange={checked => handleDeliveryDestinationChange(destination, checked as boolean)} 
+                       />
+                       <Label htmlFor={destination} className="text-sm font-medium">{destination}</Label>
+                     </div>
+                   ))}
+                 </div>
+               </div>
+             </CardContent>
+           </Card>
 
           {/* Submit Button */}
           <div className="text-center">
