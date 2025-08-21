@@ -814,7 +814,7 @@ const ProductionOrderForm: React.FC = () => {
           {/* Submit Button */}
           <div className="text-center">
             <Button type="submit" size="lg" className="bg-gradient-primary hover:bg-gradient-to-r hover:from-primary-glow hover:to-primary text-white px-12 py-3 text-lg font-semibold shadow-medium hover:shadow-strong transition-all duration-300">
-              Submit Production Order
+              Submit Product Specification Form
             </Button>
           </div>
 
