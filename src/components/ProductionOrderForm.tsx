@@ -555,7 +555,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Tray Information */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <Label htmlFor="trayType" className="text-sm font-medium">Tray Type</Label>
+                  <Label htmlFor="trayType" className="text-sm font-medium">Tray/ Full-Wrap Type</Label>
                   <Select value={formData.trayType} onValueChange={value => handleInputChange('trayType', value)}>
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select tray type" />
