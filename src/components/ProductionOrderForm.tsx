@@ -264,16 +264,6 @@ const ProductionOrderForm: React.FC = () => {
                   className="mt-1"
                 />
               </div>
-              <div>
-                <Label htmlFor="quantityTrays" className="text-sm font-medium">Quantity Trays</Label>
-                <Input
-                  id="quantityTrays"
-                  type="number"
-                  value={formData.quantityTrays}
-                  onChange={(e) => handleInputChange('quantityTrays', e.target.value)}
-                  className="mt-1"
-                />
-              </div>
             </CardContent>
           </Card>
 
