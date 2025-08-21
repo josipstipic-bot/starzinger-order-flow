@@ -349,6 +349,7 @@ const ProductionOrderForm: React.FC = () => {
                       <SelectItem value="silver-top-silver-lid">Silver Top - Silver Lid</SelectItem>
                       <SelectItem value="silver-top-blue-lid">Silver Top - Blue Lid</SelectItem>
                       <SelectItem value="silver-top-red-lid">Silver Top - Red Lid</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
