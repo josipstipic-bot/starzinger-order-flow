@@ -550,13 +550,12 @@ const ProductionOrderForm: React.FC = () => {
                 
                 <div>
                   <Label className="text-sm font-medium">Flash Pasteurization</Label>
+                  <p className="text-xs text-muted-foreground mb-2">(CO2: max. 4,8 to 5,0 g/L)</p>
                   <RadioGroup value={formData.flashPasteurization} onValueChange={value => handleInputChange('flashPasteurization', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="flash-yes" />
-                        <Label htmlFor="flash-yes">Pasteurization (CO2: max. 4,8 to 5,0 g/L)
-Yes
-No</Label>
+                        <Label htmlFor="flash-yes">Yes</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="no" id="flash-no" />
