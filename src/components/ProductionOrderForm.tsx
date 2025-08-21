@@ -277,7 +277,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {['CBD', 'Alcohol', 'Vegan', 'Bio/Organic'].map((option) => (
+                {['CBD', 'Alcohol', 'Vegan', 'Halal'].map((option) => (
                   <div key={option} className="flex items-center space-x-2">
                     <Checkbox
                       id={option}
