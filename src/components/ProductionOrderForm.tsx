@@ -361,10 +361,10 @@ const ProductionOrderForm: React.FC = () => {
                   
                 </div>}
 
-              {/* CO2 Content */}
+              {/* Other */}
               <div>
-                <Label htmlFor="other" className="text-sm font-medium">CO2 Content:</Label>
-                <Input id="other" value={formData.other} onChange={e => handleInputChange('other', e.target.value)} className="mt-1" maxLength={20} />
+                <Label htmlFor="other" className="text-sm font-medium">Other:</Label>
+                <Input id="other" value={formData.other} onChange={e => handleInputChange('other', e.target.value)} className="mt-1" />
               </div>
 
               {/* Pasteurization Options */}
