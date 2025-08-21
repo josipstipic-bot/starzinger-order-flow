@@ -685,7 +685,7 @@ No</Label>
                {/* EAN/UPC Information */}
                <div>
                  <h4 className="font-semibold mb-4">EAN/UPC Information</h4>
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                    <div>
                      <Label htmlFor="eanUpcCan" className="text-sm font-medium">EAN/UPC Can</Label>
                      <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
@@ -695,7 +695,9 @@ No</Label>
                      <Label htmlFor="eanUpcTray" className="text-sm font-medium">EAN/UPC Tray</Label>
                      <Input id="eanUpcTray" value={formData.eanUpcTray} onChange={e => handleInputChange('eanUpcTray', e.target.value)} className="mt-1" />
                    </div>
-
+                 </div>
+                 
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                    <div>
                      <Label className="text-sm font-medium">Place Tray EAN Sticker on top of the Tray</Label>
                      <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
@@ -711,13 +713,7 @@ No</Label>
                        </div>
                      </RadioGroup>
                    </div>
-                 </div>
-               </div>
 
-               {/* Tray EAN Code Printed */}
-               <div>
-                 <h4 className="font-semibold mb-4">Tray EAN Code Information</h4>
-                 <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                    <div>
                      <Label className="text-sm font-medium">Tray EAN Code is printed on the tray</Label>
                      <RadioGroup value={formData.trayEanCodePrinted || ''} onValueChange={value => handleInputChange('trayEanCodePrinted', value)}>
@@ -733,8 +729,8 @@ No</Label>
                        </div>
                      </RadioGroup>
                    </div>
-                </div>
-              </div>
+                 </div>
+               </div>
 
               {/* Additional Information */}
               <div>
