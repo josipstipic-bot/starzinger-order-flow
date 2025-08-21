@@ -31,14 +31,12 @@ interface OrderFormData {
 
   // Top Variants
   topVariant: string;
-  topVariantOther: string;
   bpaniNextGen: string;
 
   // Recipe & Allergens
   recipeNumber: string;
   containsAllergens: string;
   allergenDetails: string;
-  recipeOther: string;
 
   // Dates & Processing
   expiryDate: string;
@@ -53,6 +51,7 @@ interface OrderFormData {
   palletType: string;
 
   // Protection & Wrapping
+  cornerProtection: string;
   doubleWrapping: string;
 
   // Tray Information
@@ -67,9 +66,6 @@ interface OrderFormData {
 
   // Additional Information
   additionalInfo: string;
-
-  // ABV Information
-  abvPercentage: string;
 
   // Delivery Information
   deliveryDate: string;
@@ -87,18 +83,17 @@ const ProductionOrderForm: React.FC = () => {
     canSize: '',
     packagingVariant: '',
     topVariant: '',
-    topVariantOther: '',
     bpaniNextGen: '',
     recipeNumber: '',
     containsAllergens: '',
     allergenDetails: '',
-    recipeOther: '',
     expiryDate: '',
     pasteurization: '',
     flashPasteurization: '',
     writingLine1: '',
     writingLine2: '',
     palletType: '',
+    cornerProtection: '',
     doubleWrapping: '',
     trayType: '',
     trayColor: '',
@@ -107,7 +102,6 @@ const ProductionOrderForm: React.FC = () => {
     eanUpcTray: '',
     eanSticker: '',
     additionalInfo: '',
-    abvPercentage: '',
     deliveryDate: ''
   });
   const {
@@ -162,18 +156,17 @@ const ProductionOrderForm: React.FC = () => {
       canSize: '',
       packagingVariant: '',
       topVariant: '',
-      topVariantOther: '',
       bpaniNextGen: '',
       recipeNumber: '',
       containsAllergens: '',
       allergenDetails: '',
-      recipeOther: '',
       expiryDate: '',
       pasteurization: '',
       flashPasteurization: '',
       writingLine1: '',
       writingLine2: '',
       palletType: '',
+      cornerProtection: '',
       doubleWrapping: '',
       trayType: '',
       trayColor: '',
@@ -182,7 +175,6 @@ const ProductionOrderForm: React.FC = () => {
       eanUpcTray: '',
       eanSticker: '',
       additionalInfo: '',
-      abvPercentage: '',
       deliveryDate: ''
     });
   };
@@ -191,11 +183,8 @@ const ProductionOrderForm: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="bg-gradient-primary text-primary-foreground py-6 px-8 rounded-lg shadow-medium mb-6">
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <img src="/lovable-uploads/30f5d91d-b692-4ad3-85ff-f9b9b45f5bf2.png" alt="Starzinger Logo" className="h-16 w-auto" />
-            </div>
-            <h1 className="text-3xl font-bold mb-2">Product Specification Form</h1>
-            <p className="text-lg opacity-90">Starzinger Beverage Group - Best in Beverage</p>
+            <h1 className="text-3xl font-bold mb-2">Production Order Form</h1>
+            <p className="text-lg opacity-90">Starzinger Beverage Group - "The Spring of Quality!"</p>
           </div>
         </div>
 
@@ -239,7 +228,7 @@ const ProductionOrderForm: React.FC = () => {
                 <Input id="productDescription" value={formData.productDescription} onChange={e => handleInputChange('productDescription', e.target.value)} className="mt-1" required />
               </div>
               <div>
-                <Label htmlFor="decorationNumber" className="text-sm font-medium">Can Layout Number</Label>
+                <Label htmlFor="decorationNumber" className="text-sm font-medium">Product Description</Label>
                 <Input id="decorationNumber" value={formData.decorationNumber} onChange={e => handleInputChange('decorationNumber', e.target.value)} className="mt-1" />
               </div>
             </CardContent>
@@ -260,24 +249,6 @@ const ProductionOrderForm: React.FC = () => {
                     <Label htmlFor={option} className="text-sm font-medium">{option}</Label>
                   </div>)}
               </div>
-              
-              {/* ABV Field - Conditional on Alcohol Selection */}
-              {formData.specialFilling.includes('Alcohol') && (
-                <div className="mt-4">
-                  <Label htmlFor="abvPercentage" className="text-sm font-medium">If Alcohol, please enter the %ABV</Label>
-                  <Input 
-                    id="abvPercentage" 
-                    value={formData.abvPercentage} 
-                    onChange={e => handleInputChange('abvPercentage', e.target.value)} 
-                    className="mt-1 max-w-xs" 
-                    placeholder="e.g., 5.0"
-                    type="number"
-                    step="0.1"
-                    min="0"
-                    max="100"
-                  />
-                </div>
-              )}
             </CardContent>
           </Card>
 
@@ -291,15 +262,10 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label className="text-sm font-medium mb-3 block">Can Size:</Label>
                 <RadioGroup value={formData.canSize} onValueChange={value => handleInputChange('canSize', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="250ml-slim" id="250ml-slim" />
                     <Label htmlFor="250ml-slim">250 ml Slim</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="330ml-sleek" id="330ml-sleek" />
-                    <Label htmlFor="330ml-sleek">330 ml Sleek</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="355ml-sleek" id="355ml-sleek" />
@@ -329,7 +295,8 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
-                    <Label htmlFor="6pcs-tray">6 Pack</Label>
+                    <Label htmlFor="6pcs-tray">6 Pack with Overfoil
+                  </Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -355,22 +322,10 @@ const ProductionOrderForm: React.FC = () => {
                       <SelectValue placeholder="Select top variant" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="silver-top-silver-lid">Silver Top - Silver Lid</SelectItem>
-                      <SelectItem value="silver-top-blue-lid">Silver Top - Blue Lid</SelectItem>
-                      <SelectItem value="silver-top-red-lid">Silver Top - Red Lid</SelectItem>
+                      <SelectItem value="deckel-top">Deckel / Top</SelectItem>
+                      <SelectItem value="lasche-lid">Lasche / Lid</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="topVariantOther" className="text-sm font-medium">Other:</Label>
-                  <Input 
-                    id="topVariantOther" 
-                    value={formData.topVariantOther || ''} 
-                    onChange={e => handleInputChange('topVariantOther', e.target.value)} 
-                    className="mt-1" 
-                    placeholder="Specify other top variant"
-                  />
                 </div>
                 
                 <div>
@@ -401,10 +356,7 @@ const ProductionOrderForm: React.FC = () => {
                   <Label className="text-sm font-medium">Contains Allergens?</Label>
                   <RadioGroup value={formData.containsAllergens} onValueChange={value => handleInputChange('containsAllergens', value)}>
                     <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="yes" id="allergen-yes" />
-                        <Label htmlFor="allergen-yes">Yes</Label>
-                      </div>
+                      
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="no" id="allergen-no" />
                         <Label htmlFor="allergen-no">No</Label>
@@ -416,11 +368,11 @@ const ProductionOrderForm: React.FC = () => {
 
               {formData.containsAllergens === 'yes' && <div>
                   <Label htmlFor="allergenDetails" className="text-sm font-medium">Which Allergens?</Label>
-                  <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
+                  
                 </div>}
 
               {/* Pasteurization Options */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium">Pasteurization</Label>
                   <RadioGroup value={formData.pasteurization} onValueChange={value => handleInputChange('pasteurization', value)}>
@@ -443,7 +395,9 @@ const ProductionOrderForm: React.FC = () => {
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="flash-yes" />
-                        <Label htmlFor="flash-yes">Yes</Label>
+                        <Label htmlFor="flash-yes">Contains Allergens
+Yes
+No</Label>
                       </div>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="no" id="flash-no" />
@@ -451,11 +405,6 @@ const ProductionOrderForm: React.FC = () => {
                       </div>
                     </div>
                   </RadioGroup>
-                </div>
-                
-                <div>
-                  <Label htmlFor="recipeOther" className="text-sm font-medium">Other:</Label>
-                  <Input id="recipeOther" value={formData.recipeOther || ''} onChange={e => handleInputChange('recipeOther', e.target.value)} className="mt-1 max-w-xs" />
                 </div>
               </div>
             </CardContent>
@@ -505,6 +454,22 @@ const ProductionOrderForm: React.FC = () => {
               {/* Protection Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
+                  
+                  <RadioGroup value={formData.cornerProtection} onValueChange={value => handleInputChange('cornerProtection', value)}>
+                    <div className="flex items-center space-x-4 mt-2">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="corner-yes" />
+                        <Label htmlFor="corner-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="corner-no" />
+                        <Label htmlFor="corner-no">No</Label>
+                      </div>
+                    </div>
+                  </RadioGroup>
+                </div>
+                
+                <div>
                   <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
                   <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
                     <div className="flex items-center space-x-4 mt-2">
@@ -517,7 +482,7 @@ const ProductionOrderForm: React.FC = () => {
                         <Label htmlFor="wrap-no">No</Label>
                       </div>
                     </div>
-                  </RadioGroup>             
+                  </RadioGroup>
                 </div>
               </div>
 
