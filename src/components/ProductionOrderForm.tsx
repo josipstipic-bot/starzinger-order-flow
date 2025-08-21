@@ -413,7 +413,7 @@ const ProductionOrderForm: React.FC = () => {
                       <SelectValue placeholder="Select top variant" />
                     </SelectTrigger>
                      <SelectContent>
-                       <SelectItem value="">None / Clear Selection</SelectItem>
+                       <SelectItem value="none">None / Clear Selection</SelectItem>
                        <SelectItem value="silver-top-silver-lid">Silver Top - Silver Lid</SelectItem>
                        <SelectItem value="silver-top-blue-lid">Silver Top - Blue Lid</SelectItem>
                        <SelectItem value="silver-top-red-lid">Silver Top - Red Lid</SelectItem>
