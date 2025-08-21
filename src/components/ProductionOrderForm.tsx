@@ -54,7 +54,6 @@ interface OrderFormData {
   palletType: string;
 
   // Protection & Wrapping
-  cornerProtection: string;
   doubleWrapping: string;
 
   // Tray Information
@@ -97,7 +96,6 @@ const ProductionOrderForm: React.FC = () => {
     writingLine1: '',
     writingLine2: '',
     palletType: '',
-    cornerProtection: '',
     doubleWrapping: '',
     trayType: '',
     trayColor: '',
@@ -171,7 +169,6 @@ const ProductionOrderForm: React.FC = () => {
       writingLine1: '',
       writingLine2: '',
       palletType: '',
-      cornerProtection: '',
       doubleWrapping: '',
       trayType: '',
       trayColor: '',
@@ -477,23 +474,7 @@ const ProductionOrderForm: React.FC = () => {
               </div>
 
               {/* Protection Options */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm font-medium">Corner Protection</Label>
-                  <RadioGroup value={formData.cornerProtection} onValueChange={value => handleInputChange('cornerProtection', value)}>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="yes" id="corner-yes" />
-                        <Label htmlFor="corner-yes">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id="corner-no" />
-                        <Label htmlFor="corner-no">No</Label>
-                      </div>
-                    </div>
-                  </RadioGroup>
-                </div>
-                
+              <div>
                 <div>
                   <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
                   <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
