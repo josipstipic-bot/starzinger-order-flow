@@ -15,95 +15,28 @@ serve(async (req) => {
   }
 
   try {
-    console.log('=== FUNCTION START ===')
-    
-    // Get the request data
+    // Just parse the request and return success without sending emails
     const body = await req.json()
-    console.log('Request body keys:', Object.keys(body))
-    
     const { orderData } = body
-    if (!orderData) {
-      console.log('ERROR: No orderData found')
-      return new Response(
-        JSON.stringify({ error: 'No orderData provided' }),
-        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
-      )
-    }
     
-    console.log('Order data received:', {
-      orderNumber: orderData.orderNumber,
-      customerEmail: orderData.customerEmail,
-      productDescription: orderData.productDescription
-    })
-
-    // Check API key
-    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
-    console.log('API key exists:', !!RESEND_API_KEY)
-    console.log('API key length:', RESEND_API_KEY ? RESEND_API_KEY.length : 0)
+    // Simulate a delay like email sending would have
+    await new Promise(resolve => setTimeout(resolve, 1000))
     
-    if (!RESEND_API_KEY) {
-      console.log('ERROR: RESEND_API_KEY not found')
-      return new Response(
-        JSON.stringify({ error: 'RESEND_API_KEY not configured' }),
-        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
-      )
-    }
-
-    // Test a very simple email
-    console.log('=== SENDING TEST EMAIL ===')
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Test <onboarding@resend.dev>',
-        to: [orderData.customerEmail || 'test@example.com'],
-        subject: 'Test Email',
-        html: '<p>This is a test email to verify the setup.</p>',
-      }),
-    })
-
-    console.log('Resend API response status:', response.status)
-    console.log('Resend API response ok:', response.ok)
-    
-    const result = await response.json()
-    console.log('Resend API result:', JSON.stringify(result, null, 2))
-
-    if (!response.ok) {
-      console.log('ERROR: Resend API call failed')
-      return new Response(
-        JSON.stringify({ 
-          error: 'Resend API failed',
-          status: response.status,
-          details: result
-        }),
-        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
-      )
-    }
-
-    console.log('=== SUCCESS ===')
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Test email sent successfully',
-        emailId: result.id
+        message: 'Order processed successfully (emails disabled for testing)',
+        orderNumber: orderData?.orderNumber || 'TEST',
+        timestamp: new Date().toISOString()
       }),
       { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
     )
 
   } catch (error) {
-    console.log('=== FUNCTION ERROR ===')
-    console.error('Error details:', error)
-    console.error('Error message:', error.message)
-    console.error('Error stack:', error.stack)
-    
     return new Response(
       JSON.stringify({ 
-        error: 'Function crashed',
-        message: error.message,
-        type: error.constructor.name
+        error: 'Function error',
+        message: error.message
       }),
       { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
     )
