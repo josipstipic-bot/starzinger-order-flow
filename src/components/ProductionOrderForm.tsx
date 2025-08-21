@@ -155,6 +155,96 @@ const ProductionOrderForm: React.FC = () => {
       specialFilling: checked ? [...prev.specialFilling, value] : prev.specialFilling.filter(item => item !== value)
     }));
   };
+  // Helper function to get palletization options based on configuration
+  const getPalletizationOptions = () => {
+    const canSize = formData.canSize;
+    const packagingType = formData.packagingType;
+    const packagingVariant = formData.packagingVariant;
+    const fullWrapPack = formData.fullWrapPack;
+    
+    // Determine the pack size for different configurations
+    let packSize = '';
+    if (packagingType === 'tray') {
+      if (packagingVariant === '24pcs-tray') packSize = '24';
+      else if (packagingVariant === '12pcs-tray') packSize = '12';
+      else if (packagingVariant === 'overfoil') packSize = '4';
+      else if (packagingVariant === '6pcs-tray') packSize = '6';
+    } else if (packagingType === 'full-wrap') {
+      if (fullWrapPack === '24-pack') packSize = '24';
+      else if (fullWrapPack === '12-pack') packSize = '12';
+    }
+    
+    // Define all the configuration rules
+    const options = {
+      euroOptions: [] as string[],
+      ukOptions: [] as string[],
+      isUnsupported: false,
+      errorMessage: ''
+    };
+    
+    // Check for unsupported configurations first
+    if (canSize === '250ml-slim' && packagingType === 'full-wrap') {
+      options.isUnsupported = true;
+      options.errorMessage = 'The combination of 250ml Slim cans with Full Wrap is not supported.';
+      return options;
+    }
+    
+    if (canSize === '500ml-base' && packagingType === 'full-wrap' && packSize === '24') {
+      options.isUnsupported = true;
+      options.errorMessage = 'The combination of 500ml cans with 24 Pack Full Wrap is not supported.';
+      return options;
+    }
+    
+    if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'full-wrap' && packSize === '12') {
+      options.isUnsupported = true;
+      options.errorMessage = 'The combination of 330ml/355ml Sleek cans with 12 Pack Full Wrap is not supported.';
+      return options;
+    }
+    
+    // Now handle supported configurations
+    if (canSize === '250ml-slim' && packagingType === 'tray') {
+      if (packSize === '24' || packSize === '4' || packSize === '6') {
+        options.euroOptions = ['108'];
+        options.ukOptions = ['160'];
+      } else if (packSize === '12') {
+        options.euroOptions = ['240'];
+        options.ukOptions = ['310'];
+      }
+    }
+    
+    if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'tray') {
+      if (packSize === '24' || packSize === '4' || packSize === '6') {
+        options.euroOptions = ['90'];
+        options.ukOptions = ['117'];
+      } else if (packSize === '12') {
+        options.euroOptions = ['180'];
+        options.ukOptions = ['225'];
+      }
+    }
+    
+    if (canSize === '500ml-base' && packagingType === 'tray') {
+      if (packSize === '24' || packSize === '4' || packSize === '6') {
+        options.euroOptions = ['63', '72'];
+        options.ukOptions = ['90'];
+      } else if (packSize === '12') {
+        options.euroOptions = ['144'];
+        options.ukOptions = ['176'];
+      }
+    }
+    
+    if ((canSize === '330ml-sleek' || canSize === '355ml-sleek') && packagingType === 'full-wrap' && packSize === '24') {
+      options.euroOptions = ['90'];
+      options.ukOptions = ['117'];
+    }
+    
+    if (canSize === '500ml-base' && packagingType === 'full-wrap' && packSize === '12') {
+      options.euroOptions = ['144'];
+      options.ukOptions = ['176'];
+    }
+    
+    return options;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -651,66 +741,101 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
               </div>
 
-              {/* Palletization - Only for 24Pack */}
-              {formData.packagingVariant === '24pcs-tray' && <>
-                  <div>
-                    <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type</Label>
-                    <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select pallet type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>
-                        <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                   </div>
+              {/* Palletization - Dynamic based on configuration */}
+              {(() => {
+                const palletOptions = getPalletizationOptions();
+                const showPalletization = formData.canSize && formData.packagingType && 
+                  ((formData.packagingType === 'tray' && (formData.packagingVariant === '24pcs-tray' || formData.packagingVariant === '12pcs-tray' || formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray')) ||
+                   (formData.packagingType === 'full-wrap' && formData.fullWrapPack));
 
-                   {/* Conditional Tray Count for Pallets */}
-                   {formData.palletType && formData.canSize && <div>
-                       <Label className="text-sm font-medium">Trays per Pallet</Label>
-                       <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
-                         <SelectTrigger className="mt-1">
-                           <SelectValue placeholder="Select tray count" />
-                         </SelectTrigger>
-                         <SelectContent>
-                           {/* 250ml Slim options */}
-                           {formData.canSize === '250ml-slim' && formData.palletType === 'euro-pallet' && <>
-                               <SelectItem value="108">108 Trays per Euro Pallet</SelectItem>
-                               <SelectItem value="120">120 Trays per Euro Pallet</SelectItem>
-                             </>}
-                           {formData.canSize === '250ml-slim' && formData.palletType === 'uk-pallet' && <SelectItem value="160">160 Trays per UK Pallet</SelectItem>}
-                           
-                           {/* 330ml/355ml Sleek options */}
-                           {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'euro-pallet' && <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>}
-                           {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'uk-pallet' && <SelectItem value="104">104 Trays per UK Pallet</SelectItem>}
-                           
-                           {/* 500ml Base options */}
-                           {formData.canSize === '500ml-base' && formData.palletType === 'euro-pallet' && <SelectItem value="72">72 Trays per Euro Pallet</SelectItem>}
-                           {formData.canSize === '500ml-base' && formData.palletType === 'uk-pallet' && <SelectItem value="90">90 Trays per UK Pallet</SelectItem>}
-                         </SelectContent>
-                       </Select>
-                     </div>}
+                if (!showPalletization) return null;
 
-                  {/* Protection Options */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
-                      <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
-                        <div className="flex items-center space-x-4 mt-2">
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="yes" id="wrap-yes" />
-                            <Label htmlFor="wrap-yes">Yes</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="no" id="wrap-no" />
-                            <Label htmlFor="wrap-no">No</Label>
-                          </div>
-                        </div>
-                      </RadioGroup>             
+                if (palletOptions.isUnsupported) {
+                  return (
+                    <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <div className="flex items-center gap-2 text-destructive">
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                        </svg>
+                        <span className="font-medium">Configuration Not Supported</span>
+                      </div>
+                      <p className="text-sm text-destructive mt-1">
+                        {palletOptions.errorMessage}
+                      </p>
                     </div>
-                  </div>
-                </>}
+                  );
+                }
+
+                if (palletOptions.euroOptions.length === 0 && palletOptions.ukOptions.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <>
+                    <div>
+                      <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type</Label>
+                      <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Select pallet type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {palletOptions.euroOptions.length > 0 && (
+                            <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>
+                          )}
+                          {palletOptions.ukOptions.length > 0 && (
+                            <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Conditional Tray Count for Pallets */}
+                    {formData.palletType && (
+                      <div>
+                        <Label className="text-sm font-medium">
+                          {formData.packagingType === 'full-wrap' && formData.fullWrapPack === '12-pack' ? 'Trays Wraps per Pallet' : 'Trays per Pallet'}
+                        </Label>
+                        <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
+                          <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Select tray count" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {formData.palletType === 'euro-pallet' && palletOptions.euroOptions.map(option => (
+                              <SelectItem key={option} value={option}>
+                                {option} {formData.packagingType === 'full-wrap' && formData.fullWrapPack === '12-pack' ? 'Trays Wraps' : 'Trays'} per Euro Pallet
+                              </SelectItem>
+                            ))}
+                            {formData.palletType === 'uk-pallet' && palletOptions.ukOptions.map(option => (
+                              <SelectItem key={option} value={option}>
+                                {option} {formData.packagingType === 'full-wrap' && formData.fullWrapPack === '12-pack' ? 'Trays Wraps' : 'Trays'} per UK Pallet
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    )}
+
+                    {/* Protection Options */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
+                        <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
+                          <div className="flex items-center space-x-4 mt-2">
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="yes" id="wrap-yes" />
+                              <Label htmlFor="wrap-yes">Yes</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="no" id="wrap-no" />
+                              <Label htmlFor="wrap-no">No</Label>
+                            </div>
+                          </div>
+                        </RadioGroup>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
 
               {/* Tray Information */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
