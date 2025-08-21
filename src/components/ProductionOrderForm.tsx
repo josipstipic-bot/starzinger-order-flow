@@ -8,70 +8,68 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
-
 interface OrderFormData {
   // Customer Information
   customerNumber: string;
   customerId: string;
-  
+
   // Product Information
   articleNumber: string;
   productDescription: string;
   decorationNumber: string;
   quantityCans: string;
   quantityTrays: string;
-  
+
   // Special Options
   specialFilling: string[];
-  
+
   // Can Size
   canSize: string;
-  
+
   // Packaging Options
   packagingVariant: string;
-  
+
   // Top Variants
   topVariant: string;
   bpaniNextGen: string;
-  
+
   // Recipe & Allergens
   recipeNumber: string;
   containsAllergens: string;
   allergenDetails: string;
-  
+
   // Dates & Processing
   expiryDate: string;
   pasteurization: string;
   flashPasteurization: string;
-  
+
   // Writing/Diction
   writingLine1: string;
   writingLine2: string;
-  
+
   // Palletization
   palletType: string;
-  
+
   // Protection & Wrapping
   cornerProtection: string;
   doubleWrapping: string;
-  
+
   // Tray Information
   trayType: string;
   trayColor: string;
   trayNumber: string;
-  
+
   // EAN/UPC Information
   eanUpcCan: string;
   eanUpcTray: string;
   eanSticker: string;
-  
+
   // Additional Information
   additionalInfo: string;
-  
+
   // Delivery Information
   deliveryDate: string;
 }
-
 const ProductionOrderForm: React.FC = () => {
   const [formData, setFormData] = useState<OrderFormData>({
     customerNumber: '',
@@ -106,25 +104,24 @@ const ProductionOrderForm: React.FC = () => {
     additionalInfo: '',
     deliveryDate: ''
   });
-
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleInputChange = (field: keyof OrderFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
   const handleSpecialFillingChange = (value: string, checked: boolean) => {
     setFormData(prev => ({
       ...prev,
-      specialFilling: checked 
-        ? [...prev.specialFilling, value]
-        : prev.specialFilling.filter(item => item !== value)
+      specialFilling: checked ? [...prev.specialFilling, value] : prev.specialFilling.filter(item => item !== value)
     }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!formData.customerNumber || !formData.productDescription) {
       toast({
@@ -141,10 +138,9 @@ const ProductionOrderForm: React.FC = () => {
       orderNumber: `SZ${Date.now()}`,
       submittedAt: new Date().toISOString()
     }));
-
     toast({
       title: "Order Submitted Successfully!",
-      description: `Order for ${formData.productDescription} has been submitted. You'll receive a confirmation email shortly.`,
+      description: `Order for ${formData.productDescription} has been submitted. You'll receive a confirmation email shortly.`
     });
 
     // Reset form
@@ -182,9 +178,7 @@ const ProductionOrderForm: React.FC = () => {
       deliveryDate: ''
     });
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-subtle">
+  return <div className="min-h-screen bg-gradient-subtle">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -207,22 +201,11 @@ const ProductionOrderForm: React.FC = () => {
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="customerNumber" className="text-sm font-medium">Customer Name *</Label>
-                <Input
-                  id="customerNumber"
-                  value={formData.customerNumber}
-                  onChange={(e) => handleInputChange('customerNumber', e.target.value)}
-                  className="mt-1"
-                  required
-                />
+                <Input id="customerNumber" value={formData.customerNumber} onChange={e => handleInputChange('customerNumber', e.target.value)} className="mt-1" required />
               </div>
               <div>
                 <Label htmlFor="customerId" className="text-sm font-medium">Customer ID</Label>
-                <Input
-                  id="customerId"
-                  value={formData.customerId}
-                  onChange={(e) => handleInputChange('customerId', e.target.value)}
-                  className="mt-1"
-                />
+                <Input id="customerId" value={formData.customerId} onChange={e => handleInputChange('customerId', e.target.value)} className="mt-1" />
               </div>
             </CardContent>
           </Card>
@@ -238,31 +221,15 @@ const ProductionOrderForm: React.FC = () => {
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="articleNumber" className="text-sm font-medium">Already Existing Article Number</Label>
-                <Input
-                  id="articleNumber"
-                  value={formData.articleNumber}
-                  onChange={(e) => handleInputChange('articleNumber', e.target.value)}
-                  className="mt-1"
-                />
+                <Input id="articleNumber" value={formData.articleNumber} onChange={e => handleInputChange('articleNumber', e.target.value)} className="mt-1" />
               </div>
               <div className="md:col-span-2">
                 <Label htmlFor="productDescription" className="text-sm font-medium">Product Description *</Label>
-                <Input
-                  id="productDescription"
-                  value={formData.productDescription}
-                  onChange={(e) => handleInputChange('productDescription', e.target.value)}
-                  className="mt-1"
-                  required
-                />
+                <Input id="productDescription" value={formData.productDescription} onChange={e => handleInputChange('productDescription', e.target.value)} className="mt-1" required />
               </div>
               <div>
                 <Label htmlFor="decorationNumber" className="text-sm font-medium">Cliche Number</Label>
-                <Input
-                  id="decorationNumber"
-                  value={formData.decorationNumber}
-                  onChange={(e) => handleInputChange('decorationNumber', e.target.value)}
-                  className="mt-1"
-                />
+                <Input id="decorationNumber" value={formData.decorationNumber} onChange={e => handleInputChange('decorationNumber', e.target.value)} className="mt-1" />
               </div>
             </CardContent>
           </Card>
@@ -277,16 +244,10 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {['Alcohol', 'Vegan', 'Halal'].map((option) => (
-                  <div key={option} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={option}
-                      checked={formData.specialFilling.includes(option)}
-                      onCheckedChange={(checked) => handleSpecialFillingChange(option, checked as boolean)}
-                    />
+                {['Alcohol', 'Vegan', 'Halal'].map(option => <div key={option} className="flex items-center space-x-2">
+                    <Checkbox id={option} checked={formData.specialFilling.includes(option)} onCheckedChange={checked => handleSpecialFillingChange(option, checked as boolean)} />
                     <Label htmlFor={option} className="text-sm font-medium">{option}</Label>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </CardContent>
           </Card>
@@ -301,7 +262,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <RadioGroup value={formData.canSize} onValueChange={(value) => handleInputChange('canSize', value)}>
+                <RadioGroup value={formData.canSize} onValueChange={value => handleInputChange('canSize', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="250ml-slim" id="250ml-slim" />
                     <Label htmlFor="250ml-slim">250 ml Slim</Label>
@@ -319,7 +280,7 @@ const ProductionOrderForm: React.FC = () => {
               
               <div>
                 <Label className="text-sm font-medium mb-3 block">Packaging Variant</Label>
-                <RadioGroup value={formData.packagingVariant} onValueChange={(value) => handleInputChange('packagingVariant', value)}>
+                <RadioGroup value={formData.packagingVariant} onValueChange={value => handleInputChange('packagingVariant', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
                     <Label htmlFor="24pcs-tray">24 Pack</Label>
@@ -330,7 +291,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="overfoil" id="overfoil" />
-                    <Label htmlFor="overfoil">Overfoil</Label>
+                    <Label htmlFor="overfoil">4Pack with Overfoil</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -351,7 +312,7 @@ const ProductionOrderForm: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="topVariant" className="text-sm font-medium">Top Variant</Label>
-                  <Select value={formData.topVariant} onValueChange={(value) => handleInputChange('topVariant', value)}>
+                  <Select value={formData.topVariant} onValueChange={value => handleInputChange('topVariant', value)}>
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select top variant" />
                     </SelectTrigger>
@@ -364,7 +325,7 @@ const ProductionOrderForm: React.FC = () => {
                 
                 <div>
                   <Label htmlFor="bpaniNextGen" className="text-sm font-medium">BPANI (NexGen) Top</Label>
-                  <RadioGroup value={formData.bpaniNextGen} onValueChange={(value) => handleInputChange('bpaniNextGen', value)}>
+                  <RadioGroup value={formData.bpaniNextGen} onValueChange={value => handleInputChange('bpaniNextGen', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="bpani-yes" />
@@ -383,18 +344,12 @@ const ProductionOrderForm: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="recipeNumber" className="text-sm font-medium">Recipe Number</Label>
-                  <Input
-                    id="recipeNumber"
-                    value={formData.recipeNumber}
-                    onChange={(e) => handleInputChange('recipeNumber', e.target.value)}
-                    className="mt-1"
-                    placeholder="Please attach recipe to each order"
-                  />
+                  <Input id="recipeNumber" value={formData.recipeNumber} onChange={e => handleInputChange('recipeNumber', e.target.value)} className="mt-1" placeholder="Please attach recipe to each order" />
                 </div>
                 
                 <div>
                   <Label className="text-sm font-medium">Contains Allergens?</Label>
-                  <RadioGroup value={formData.containsAllergens} onValueChange={(value) => handleInputChange('containsAllergens', value)}>
+                  <RadioGroup value={formData.containsAllergens} onValueChange={value => handleInputChange('containsAllergens', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="allergen-yes" />
@@ -409,24 +364,16 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
               </div>
 
-              {formData.containsAllergens === 'yes' && (
-                <div>
+              {formData.containsAllergens === 'yes' && <div>
                   <Label htmlFor="allergenDetails" className="text-sm font-medium">Which Allergens?</Label>
-                  <Textarea
-                    id="allergenDetails"
-                    value={formData.allergenDetails}
-                    onChange={(e) => handleInputChange('allergenDetails', e.target.value)}
-                    className="mt-1"
-                    rows={2}
-                  />
-                </div>
-              )}
+                  <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
+                </div>}
 
               {/* Pasteurization Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium">Pasteurization</Label>
-                  <RadioGroup value={formData.pasteurization} onValueChange={(value) => handleInputChange('pasteurization', value)}>
+                  <RadioGroup value={formData.pasteurization} onValueChange={value => handleInputChange('pasteurization', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="past-yes" />
@@ -442,7 +389,7 @@ const ProductionOrderForm: React.FC = () => {
                 
                 <div>
                   <Label className="text-sm font-medium">Flash Pasteurization</Label>
-                  <RadioGroup value={formData.flashPasteurization} onValueChange={(value) => handleInputChange('flashPasteurization', value)}>
+                  <RadioGroup value={formData.flashPasteurization} onValueChange={value => handleInputChange('flashPasteurization', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="flash-yes" />
@@ -475,21 +422,11 @@ const ProductionOrderForm: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
-                    <Input
-                      id="writingLine1"
-                      value={formData.writingLine1}
-                      onChange={(e) => handleInputChange('writingLine1', e.target.value)}
-                      className="mt-1"
-                    />
+                    <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
                   </div>
                   <div>
                     <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
-                    <Input
-                      id="writingLine2"
-                      value={formData.writingLine2}
-                      onChange={(e) => handleInputChange('writingLine2', e.target.value)}
-                      className="mt-1"
-                    />
+                    <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
                 </div>
               </div>
@@ -497,7 +434,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Palletization */}
               <div>
                 <Label htmlFor="palletType" className="text-sm font-medium">Palletization</Label>
-                <Select value={formData.palletType} onValueChange={(value) => handleInputChange('palletType', value)}>
+                <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Select pallet type" />
                   </SelectTrigger>
@@ -513,7 +450,7 @@ const ProductionOrderForm: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium">Corner Protection</Label>
-                  <RadioGroup value={formData.cornerProtection} onValueChange={(value) => handleInputChange('cornerProtection', value)}>
+                  <RadioGroup value={formData.cornerProtection} onValueChange={value => handleInputChange('cornerProtection', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="corner-yes" />
@@ -529,7 +466,7 @@ const ProductionOrderForm: React.FC = () => {
                 
                 <div>
                   <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
-                  <RadioGroup value={formData.doubleWrapping} onValueChange={(value) => handleInputChange('doubleWrapping', value)}>
+                  <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="wrap-yes" />
@@ -548,7 +485,7 @@ const ProductionOrderForm: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="trayType" className="text-sm font-medium">Tray Type</Label>
-                  <Select value={formData.trayType} onValueChange={(value) => handleInputChange('trayType', value)}>
+                  <Select value={formData.trayType} onValueChange={value => handleInputChange('trayType', value)}>
                     <SelectTrigger className="mt-1">
                       <SelectValue placeholder="Select tray type" />
                     </SelectTrigger>
@@ -561,22 +498,12 @@ const ProductionOrderForm: React.FC = () => {
                 
                 <div>
                   <Label htmlFor="trayColor" className="text-sm font-medium">Tray Color</Label>
-                  <Input
-                    id="trayColor"
-                    value={formData.trayColor}
-                    onChange={(e) => handleInputChange('trayColor', e.target.value)}
-                    className="mt-1"
-                  />
+                  <Input id="trayColor" value={formData.trayColor} onChange={e => handleInputChange('trayColor', e.target.value)} className="mt-1" />
                 </div>
                 
                 <div>
                   <Label htmlFor="trayNumber" className="text-sm font-medium">Tray Number</Label>
-                  <Input
-                    id="trayNumber"
-                    value={formData.trayNumber}
-                    onChange={(e) => handleInputChange('trayNumber', e.target.value)}
-                    className="mt-1"
-                  />
+                  <Input id="trayNumber" value={formData.trayNumber} onChange={e => handleInputChange('trayNumber', e.target.value)} className="mt-1" />
                 </div>
               </div>
             </CardContent>
@@ -598,27 +525,17 @@ const ProductionOrderForm: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <Label htmlFor="eanUpcCan" className="text-sm font-medium">4-Pack or 6-Pack EAN Sticker</Label>
-                    <Input
-                      id="eanUpcCan"
-                      value={formData.eanUpcCan}
-                      onChange={(e) => handleInputChange('eanUpcCan', e.target.value)}
-                      className="mt-1"
-                    />
+                    <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
                   </div>
                   
                   <div>
                     <Label htmlFor="eanUpcTray" className="text-sm font-medium">EAN/UPC Tray</Label>
-                    <Input
-                      id="eanUpcTray"
-                      value={formData.eanUpcTray}
-                      onChange={(e) => handleInputChange('eanUpcTray', e.target.value)}
-                      className="mt-1"
-                    />
+                    <Input id="eanUpcTray" value={formData.eanUpcTray} onChange={e => handleInputChange('eanUpcTray', e.target.value)} className="mt-1" />
                   </div>
 
                   <div>
                     <Label className="text-sm font-medium">Tray EAN Sticker</Label>
-                    <RadioGroup value={formData.eanSticker} onValueChange={(value) => handleInputChange('eanSticker', value)}>
+                    <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
                       <div className="flex items-center space-x-4 mt-2">
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="yes" id="ean-yes" />
@@ -637,45 +554,26 @@ const ProductionOrderForm: React.FC = () => {
               {/* Additional Information */}
               <div>
                 <Label htmlFor="additionalInfo" className="text-sm font-medium">Additional Information</Label>
-                <Textarea
-                  id="additionalInfo"
-                  value={formData.additionalInfo}
-                  onChange={(e) => handleInputChange('additionalInfo', e.target.value)}
-                  className="mt-1"
-                  rows={3}
-                  placeholder="Please provide any additional specifications or requirements..."
-                />
+                <Textarea id="additionalInfo" value={formData.additionalInfo} onChange={e => handleInputChange('additionalInfo', e.target.value)} className="mt-1" rows={3} placeholder="Please provide any additional specifications or requirements..." />
               </div>
 
               {/* Delivery Date */}
               <div>
                 <Label htmlFor="deliveryDate" className="text-sm font-medium">Delivery Date of Compounds</Label>
-                <Input
-                  id="deliveryDate"
-                  type="date"
-                  value={formData.deliveryDate}
-                  onChange={(e) => handleInputChange('deliveryDate', e.target.value)}
-                  className="mt-1"
-                />
+                <Input id="deliveryDate" type="date" value={formData.deliveryDate} onChange={e => handleInputChange('deliveryDate', e.target.value)} className="mt-1" />
               </div>
             </CardContent>
           </Card>
 
           {/* Submit Button */}
           <div className="text-center">
-            <Button 
-              type="submit" 
-              size="lg"
-              className="bg-gradient-primary hover:bg-gradient-to-r hover:from-primary-glow hover:to-primary text-white px-12 py-3 text-lg font-semibold shadow-medium hover:shadow-strong transition-all duration-300"
-            >
+            <Button type="submit" size="lg" className="bg-gradient-primary hover:bg-gradient-to-r hover:from-primary-glow hover:to-primary text-white px-12 py-3 text-lg font-semibold shadow-medium hover:shadow-strong transition-all duration-300">
               Submit Production Order
             </Button>
           </div>
 
         </form>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ProductionOrderForm;
