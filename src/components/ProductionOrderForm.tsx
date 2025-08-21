@@ -322,7 +322,7 @@ const ProductionOrderForm: React.FC = () => {
                 <RadioGroup value={formData.packagingVariant} onValueChange={(value) => handleInputChange('packagingVariant', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="24pcs-tray" id="24pcs-tray" />
-                    <Label htmlFor="24pcs-tray">24 pcs Tray / 4-Pack Foil</Label>
+                    <Label htmlFor="24pcs-tray">24 Pack</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="12pcs-tray" id="12pcs-tray" />
