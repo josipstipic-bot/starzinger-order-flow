@@ -692,7 +692,7 @@ No</Label>
                    </div>
 
                    <div>
-                     <Label className="text-sm font-medium">Tray EAN Sticker</Label>
+                     <Label className="text-sm font-medium">Place Tray EAN Sticker on top of the Tray</Label>
                      <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
                        <div className="flex items-center space-x-4 mt-2">
                          <div className="flex items-center space-x-2">
