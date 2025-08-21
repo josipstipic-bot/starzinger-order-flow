@@ -376,7 +376,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Pasteurization Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-sm font-medium">Pasteurization</Label>
+                  <Label className="text-sm font-medium">Pasteurization (CO2 max 4.8-5,0 g/L)</Label>
                   <RadioGroup value={formData.pasteurization} onValueChange={value => handleInputChange('pasteurization', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
@@ -528,7 +528,7 @@ const ProductionOrderForm: React.FC = () => {
                 <h4 className="font-semibold mb-4">EAN/UPC Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">4-Pack or 6-Pack EAN Sticker</Label>
+                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">EAN/UPC Can</Label>
                     <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
                   </div>
                   
@@ -538,7 +538,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
 
                   <div>
-                    <Label className="text-sm font-medium">Tray EAN Sticker</Label>
+                    <Label className="text-sm font-medium">Apply Tray EAN Sticker on top of the tray</Label>
                     <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
                       <div className="flex items-center space-x-4 mt-2">
                         <div className="flex items-center space-x-2">
@@ -563,8 +563,8 @@ const ProductionOrderForm: React.FC = () => {
 
               {/* Delivery Date */}
               <div>
-                <Label htmlFor="deliveryDate" className="text-sm font-medium">Delivery Date of Compounds</Label>
-                <Input id="deliveryDate" type="date" value={formData.deliveryDate} onChange={e => handleInputChange('deliveryDate', e.target.value)} className="mt-1" />
+                
+                
               </div>
             </CardContent>
           </Card>
