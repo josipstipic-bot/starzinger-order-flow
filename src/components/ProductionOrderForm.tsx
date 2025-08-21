@@ -31,6 +31,7 @@ interface OrderFormData {
 
   // Top Variants
   topVariant: string;
+  topVariantOther: string;
   bpaniNextGen: string;
 
   // Recipe & Allergens
@@ -85,6 +86,7 @@ const ProductionOrderForm: React.FC = () => {
     canSize: '',
     packagingVariant: '',
     topVariant: '',
+    topVariantOther: '',
     bpaniNextGen: '',
     recipeNumber: '',
     containsAllergens: '',
@@ -158,6 +160,7 @@ const ProductionOrderForm: React.FC = () => {
       canSize: '',
       packagingVariant: '',
       topVariant: '',
+      topVariantOther: '',
       bpaniNextGen: '',
       recipeNumber: '',
       containsAllergens: '',
@@ -354,6 +357,17 @@ const ProductionOrderForm: React.FC = () => {
                       <SelectItem value="silver-top-red-lid">Silver Top - Red Lid</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="topVariantOther" className="text-sm font-medium">Other:</Label>
+                  <Input 
+                    id="topVariantOther" 
+                    value={formData.topVariantOther || ''} 
+                    onChange={e => handleInputChange('topVariantOther', e.target.value)} 
+                    className="mt-1" 
+                    placeholder="Specify other top variant"
+                  />
                 </div>
                 
                 <div>
