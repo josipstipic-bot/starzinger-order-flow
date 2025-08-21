@@ -183,6 +183,9 @@ const ProductionOrderForm: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="bg-gradient-primary text-primary-foreground py-6 px-8 rounded-lg shadow-medium mb-6">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <img src="/lovable-uploads/30f5d91d-b692-4ad3-85ff-f9b9b45f5bf2.png" alt="Starzinger Logo" className="h-16 w-auto" />
+            </div>
             <h1 className="text-3xl font-bold mb-2">Product Specification Form</h1>
             <p className="text-lg opacity-90">Starzinger Beverage Group - Best in Beverage</p>
           </div>
