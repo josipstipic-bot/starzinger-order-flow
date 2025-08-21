@@ -102,6 +102,7 @@ serve(async (req) => {
     const emailContent = formatOrderData(orderData)
 
     // Send customer confirmation email
+    console.log('Sending customer email to:', orderData.customerEmail)
     const customerResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -123,7 +124,26 @@ serve(async (req) => {
       }),
     })
 
+    const customerResult = await customerResponse.json()
+    console.log('Customer email response:', { 
+      status: customerResponse.status, 
+      statusText: customerResponse.statusText,
+      result: customerResult 
+    })
+
+    if (!customerResponse.ok) {
+      console.error('Customer email failed:', customerResult)
+      return new Response(
+        JSON.stringify({ 
+          error: 'Failed to send customer email',
+          details: customerResult
+        }),
+        { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      )
+    }
+
     // Send company notification email
+    console.log('Sending company email to: pl@starzinger.com')
     const companyResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -138,21 +158,19 @@ serve(async (req) => {
       }),
     })
 
-    const customerResult = await customerResponse.json()
     const companyResult = await companyResponse.json()
+    console.log('Company email response:', { 
+      status: companyResponse.status, 
+      statusText: companyResponse.statusText,
+      result: companyResult 
+    })
 
-    console.log('Customer email:', customerResponse.status, customerResult)
-    console.log('Company email:', companyResponse.status, companyResult)
-
-    // Check if emails were sent successfully
-    if (!customerResponse.ok || !companyResponse.ok) {
+    if (!companyResponse.ok) {
+      console.error('Company email failed:', companyResult)
       return new Response(
         JSON.stringify({ 
-          error: 'Failed to send emails',
-          details: {
-            customer: { status: customerResponse.status, result: customerResult },
-            company: { status: companyResponse.status, result: companyResult }
-          }
+          error: 'Failed to send company email',
+          details: companyResult
         }),
         { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
       )
