@@ -545,11 +545,6 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
               </div>
 
-              {formData.containsAllergens === 'yes' && <div>
-                  <Label htmlFor="allergenDetails" className="text-sm font-medium">Which Allergens?</Label>
-                  <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
-                </div>}
-
               {/* Pasteurization & Allergens */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -599,6 +594,12 @@ const ProductionOrderForm: React.FC = () => {
                       </div>
                     </div>
                   </RadioGroup>
+                  {formData.containsAllergens === 'yes' && (
+                    <div className="mt-4">
+                      <Label htmlFor="allergenDetails" className="text-sm font-medium">Which Allergens?</Label>
+                      <Textarea id="allergenDetails" value={formData.allergenDetails} onChange={e => handleInputChange('allergenDetails', e.target.value)} className="mt-1" rows={2} />
+                    </div>
+                  )}
                 </div>
               </div>
             </CardContent>
