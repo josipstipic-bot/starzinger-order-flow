@@ -356,6 +356,21 @@ const ProductionOrderForm: React.FC = () => {
                         <Label htmlFor="6pcs-tray">6Pack with Overfoil</Label>
                       </div>
                     </RadioGroup>
+                    
+                    {/* MOQ Notification for 250ml Slim + 12 Pack */}
+                    {formData.canSize === '250ml-slim' && formData.fullWrapPack === '12pcs-tray' && (
+                      <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-center gap-2 text-blue-700">
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span className="font-medium">MOQ Information</span>
+                        </div>
+                        <p className="text-sm text-blue-700 mt-1">
+                          For 250ml Slim cans with 12 Pack tray, the Minimum Order Quantity (MOQ) is 400,000 cans.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 )}
                 
