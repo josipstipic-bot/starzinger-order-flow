@@ -38,9 +38,6 @@ interface OrderFormData {
   containsAllergens: string;
   allergenDetails: string;
 
-  // CO2 Content
-  co2Content: string;
-
   // Dates & Processing
   expiryDate: string;
   pasteurization: string;
@@ -54,6 +51,7 @@ interface OrderFormData {
   palletType: string;
 
   // Protection & Wrapping
+  cornerProtection: string;
   doubleWrapping: string;
 
   // Tray Information
@@ -89,13 +87,13 @@ const ProductionOrderForm: React.FC = () => {
     recipeNumber: '',
     containsAllergens: '',
     allergenDetails: '',
-    co2Content: '',
     expiryDate: '',
     pasteurization: '',
     flashPasteurization: '',
     writingLine1: '',
     writingLine2: '',
     palletType: '',
+    cornerProtection: '',
     doubleWrapping: '',
     trayType: '',
     trayColor: '',
@@ -162,13 +160,13 @@ const ProductionOrderForm: React.FC = () => {
       recipeNumber: '',
       containsAllergens: '',
       allergenDetails: '',
-      co2Content: '',
       expiryDate: '',
       pasteurization: '',
       flashPasteurization: '',
       writingLine1: '',
       writingLine2: '',
       palletType: '',
+      cornerProtection: '',
       doubleWrapping: '',
       trayType: '',
       trayColor: '',
@@ -264,7 +262,6 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Label className="text-sm font-medium mb-3 block">Can Size</Label>
                 <RadioGroup value={formData.canSize} onValueChange={value => handleInputChange('canSize', value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="250ml-slim" id="250ml-slim" />
@@ -298,7 +295,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="6pcs-tray" id="6pcs-tray" />
-                    <Label htmlFor="6pcs-tray">6 Pack with Overfoil</Label>
+                    <Label htmlFor="6pcs-tray">6 Pack</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -315,18 +312,6 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               
-              {/* CO2 Content */}
-              <div>
-                <Label htmlFor="co2Content" className="text-sm font-medium">Targeted CO2 Content (g/L)</Label>
-                <Input 
-                  id="co2Content" 
-                  value={formData.co2Content || ''} 
-                  onChange={e => handleInputChange('co2Content', e.target.value)} 
-                  className="mt-1" 
-                  placeholder="Enter CO2 content in g/L"
-                />
-              </div>
-
               {/* Top Variants */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -391,7 +376,7 @@ const ProductionOrderForm: React.FC = () => {
               {/* Pasteurization Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-sm font-medium">Pasteurization (CO2 max 4.8-5,0 g/L)</Label>
+                  <Label className="text-sm font-medium">Pasteurization</Label>
                   <RadioGroup value={formData.pasteurization} onValueChange={value => handleInputChange('pasteurization', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
@@ -438,30 +423,22 @@ const ProductionOrderForm: React.FC = () => {
               {/* Writing/Diction */}
               <div>
                 <Label className="text-sm font-medium mb-3 block">Writing/Diction (on the bottom of cans)</Label>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-                  <div className="lg:col-span-2 grid grid-cols-1 gap-4">
-                    <div>
-                      <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
-                      <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
-                    </div>
-                    <div>
-                      <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
-                      <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="writingLine1" className="text-xs text-muted-foreground">Line 1</Label>
+                    <Input id="writingLine1" value={formData.writingLine1} onChange={e => handleInputChange('writingLine1', e.target.value)} className="mt-1" />
                   </div>
-                  <div className="text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg">
-                    <div className="space-y-1">
-                      <div className="font-medium mb-2">Example:</div>
-                      <div><strong>Line 1:</strong> PROD: DD.MM.YYYY HH:MM</div>
-                      <div><strong>Line 2:</strong> EXP:DD.MM.YYYY L/DDDYY</div>
-                    </div>
+                  <div>
+                    <Label htmlFor="writingLine2" className="text-xs text-muted-foreground">Line 2</Label>
+                    <Input id="writingLine2" value={formData.writingLine2} onChange={e => handleInputChange('writingLine2', e.target.value)} className="mt-1" />
                   </div>
                 </div>
               </div>
 
               {/* Palletization */}
               <div>
-                <Label htmlFor="palletType" className="text-sm font-medium">Palletization</Label>
+                <Label htmlFor="palletType" className="text-sm font-medium">Writing/Diction (on the bottom of cans - max. 22 signs)
+              </Label>
                 <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
                   <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Select pallet type" />
@@ -475,7 +452,23 @@ const ProductionOrderForm: React.FC = () => {
               </div>
 
               {/* Protection Options */}
-              <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-sm font-medium">Corner Protection</Label>
+                  <RadioGroup value={formData.cornerProtection} onValueChange={value => handleInputChange('cornerProtection', value)}>
+                    <div className="flex items-center space-x-4 mt-2">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="corner-yes" />
+                        <Label htmlFor="corner-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="corner-no" />
+                        <Label htmlFor="corner-no">No</Label>
+                      </div>
+                    </div>
+                  </RadioGroup>
+                </div>
+                
                 <div>
                   <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
                   <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
@@ -536,7 +529,7 @@ const ProductionOrderForm: React.FC = () => {
                 <h4 className="font-semibold mb-4">EAN/UPC Information</h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">EAN/UPC Can</Label>
+                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">4-Pack or 6-Pack EAN Sticker</Label>
                     <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
                   </div>
                   
@@ -546,7 +539,7 @@ const ProductionOrderForm: React.FC = () => {
                   </div>
 
                   <div>
-                    <Label className="text-sm font-medium">Apply Tray EAN Sticker on top of the tray</Label>
+                    <Label className="text-sm font-medium">Tray EAN Sticker</Label>
                     <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
                       <div className="flex items-center space-x-4 mt-2">
                         <div className="flex items-center space-x-2">
@@ -571,8 +564,8 @@ const ProductionOrderForm: React.FC = () => {
 
               {/* Delivery Date */}
               <div>
-                
-                
+                <Label htmlFor="deliveryDate" className="text-sm font-medium">Delivery Date of Compounds</Label>
+                <Input id="deliveryDate" type="date" value={formData.deliveryDate} onChange={e => handleInputChange('deliveryDate', e.target.value)} className="mt-1" />
               </div>
             </CardContent>
           </Card>
