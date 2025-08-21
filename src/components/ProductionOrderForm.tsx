@@ -237,7 +237,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="articleNumber" className="text-sm font-medium">Article Number</Label>
+                <Label htmlFor="articleNumber" className="text-sm font-medium">Already Existing Article Number</Label>
                 <Input
                   id="articleNumber"
                   value={formData.articleNumber}
