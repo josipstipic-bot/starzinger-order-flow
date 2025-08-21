@@ -77,6 +77,9 @@ interface OrderFormData {
 
   // Foil Layout Information
   foilLayoutNumber: string;
+
+  // EAN/UPC for 4Pack/6Pack
+  eanUpc4Pack6Pack: string;
 }
 const ProductionOrderForm: React.FC = () => {
   const [formData, setFormData] = useState<OrderFormData>({
@@ -114,7 +117,8 @@ const ProductionOrderForm: React.FC = () => {
     additionalInfo: '',
     abvPercentage: '',
     deliveryDate: '',
-    foilLayoutNumber: ''
+    foilLayoutNumber: '',
+    eanUpc4Pack6Pack: ''
   });
   const {
     toast
@@ -191,7 +195,8 @@ const ProductionOrderForm: React.FC = () => {
       additionalInfo: '',
       abvPercentage: '',
       deliveryDate: '',
-      foilLayoutNumber: ''
+      foilLayoutNumber: '',
+      eanUpc4Pack6Pack: ''
     });
   };
   return <div className="min-h-screen bg-gradient-subtle">
@@ -623,37 +628,51 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
               
-              {/* EAN/UPC Information */}
-              <div>
-                <h4 className="font-semibold mb-4">EAN/UPC Information</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <Label htmlFor="eanUpcCan" className="text-sm font-medium">EAN/UPC Can</Label>
-                    <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="eanUpcTray" className="text-sm font-medium">EAN/UPC Tray</Label>
-                    <Input id="eanUpcTray" value={formData.eanUpcTray} onChange={e => handleInputChange('eanUpcTray', e.target.value)} className="mt-1" />
-                  </div>
+               {/* EAN/UPC Information */}
+               <div>
+                 <h4 className="font-semibold mb-4">EAN/UPC Information</h4>
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                   <div>
+                     <Label htmlFor="eanUpcCan" className="text-sm font-medium">EAN/UPC Can</Label>
+                     <Input id="eanUpcCan" value={formData.eanUpcCan} onChange={e => handleInputChange('eanUpcCan', e.target.value)} className="mt-1" />
+                   </div>
+                   
+                   <div>
+                     <Label htmlFor="eanUpcTray" className="text-sm font-medium">EAN/UPC Tray</Label>
+                     <Input id="eanUpcTray" value={formData.eanUpcTray} onChange={e => handleInputChange('eanUpcTray', e.target.value)} className="mt-1" />
+                   </div>
 
-                  <div>
-                    <Label className="text-sm font-medium">Tray EAN Sticker</Label>
-                    <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
-                      <div className="flex items-center space-x-4 mt-2">
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="yes" id="ean-yes" />
-                          <Label htmlFor="ean-yes">Yes</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="no" id="ean-no" />
-                          <Label htmlFor="ean-no">No</Label>
-                        </div>
-                      </div>
-                    </RadioGroup>
-                  </div>
-                </div>
-              </div>
+                   <div>
+                     <Label className="text-sm font-medium">Tray EAN Sticker</Label>
+                     <RadioGroup value={formData.eanSticker} onValueChange={value => handleInputChange('eanSticker', value)}>
+                       <div className="flex items-center space-x-4 mt-2">
+                         <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="yes" id="ean-yes" />
+                           <Label htmlFor="ean-yes">Yes</Label>
+                         </div>
+                         <div className="flex items-center space-x-2">
+                           <RadioGroupItem value="no" id="ean-no" />
+                           <Label htmlFor="ean-no">No</Label>
+                         </div>
+                       </div>
+                     </RadioGroup>
+                   </div>
+                 </div>
+
+                 {/* Conditional EAN/UPC for 4Pack/6Pack */}
+                 {(formData.packagingVariant === 'overfoil' || formData.packagingVariant === '6pcs-tray') && (
+                   <div className="mt-4">
+                     <Label htmlFor="eanUpc4Pack6Pack" className="text-sm font-medium">EAN/UPC 4Pack/ 6Pack</Label>
+                     <Input 
+                       id="eanUpc4Pack6Pack" 
+                       value={formData.eanUpc4Pack6Pack} 
+                       onChange={e => handleInputChange('eanUpc4Pack6Pack', e.target.value)} 
+                       className="mt-1 max-w-md" 
+                       placeholder="Enter EAN/UPC for 4Pack/6Pack"
+                     />
+                   </div>
+                 )}
+               </div>
 
               {/* Additional Information */}
               <div>
