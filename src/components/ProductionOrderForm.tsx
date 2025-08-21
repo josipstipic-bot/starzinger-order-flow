@@ -276,7 +276,7 @@ const ProductionOrderForm: React.FC = () => {
             </CardHeader>
             <CardContent className="pt-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {['Alcohol', 'Vegan', 'Organic', 'Halal'].map(option => <div key={option} className="flex items-center space-x-2">
+                {['Halal', 'Organic', 'Vegan', 'Alcohol'].map(option => <div key={option} className="flex items-center space-x-2">
                     <Checkbox id={option} checked={formData.specialFilling.includes(option)} onCheckedChange={checked => handleSpecialFillingChange(option, checked as boolean)} />
                     <Label htmlFor={option} className="text-sm font-medium">{option}</Label>
                   </div>)}
