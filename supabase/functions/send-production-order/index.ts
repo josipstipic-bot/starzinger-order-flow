@@ -3,6 +3,11 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
 interface OrderData {
   orderNumber: string
   submittedAt: string
@@ -17,6 +22,11 @@ interface OrderData {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders })
+  }
+
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 })
   }
@@ -27,7 +37,7 @@ serve(async (req) => {
     if (!orderData.customerEmail) {
       return new Response(
         JSON.stringify({ error: 'Customer email is required' }), 
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
       )
     }
 
@@ -122,7 +132,7 @@ serve(async (req) => {
       }),
       { 
         status: 200,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', ...corsHeaders }
       }
     )
 
@@ -132,7 +142,7 @@ serve(async (req) => {
       JSON.stringify({ error: 'Failed to send order emails' }),
       { 
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', ...corsHeaders }
       }
     )
   }
