@@ -437,6 +437,9 @@ const ProductionOrderForm: React.FC = () => {
               {formData.specialFilling.includes('Alcohol') && <div className="mt-4">
                   <Label htmlFor="abvPercentage" className="text-sm font-medium">If Alcohol, please enter the %ABV</Label>
                   <Input id="abvPercentage" value={formData.abvPercentage} onChange={e => handleInputChange('abvPercentage', e.target.value)} className="mt-1 max-w-xs" placeholder="e.g., 5.0" type="number" step="0.1" min="0" max="100" />
+                  {formData.abvPercentage && <p className="text-xs text-muted-foreground mt-2 max-w-xs">
+                      ℹ️ Starzinger fills within a range of +/- 0.5% ABV
+                    </p>}
                 </div>}
             </CardContent>
           </Card>
