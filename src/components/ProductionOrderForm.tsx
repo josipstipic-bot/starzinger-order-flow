@@ -586,7 +586,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label className="text-sm font-medium">Contains Allergens?</Label>
+                  <Label className="text-sm font-medium">Beverage contains Allergens?</Label>
                   <RadioGroup value={formData.containsAllergens} onValueChange={value => handleInputChange('containsAllergens', value)}>
                     <div className="flex items-center space-x-4 mt-2">
                       <div className="flex items-center space-x-2">
