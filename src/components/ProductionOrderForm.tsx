@@ -573,7 +573,7 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="trayNumber" className="text-sm font-medium">Tray Number</Label>
+                  <Label htmlFor="trayNumber" className="text-sm font-medium">Tray/Full-Wrap Layout Number</Label>
                   <Input id="trayNumber" value={formData.trayNumber} onChange={e => handleInputChange('trayNumber', e.target.value)} className="mt-1" />
                 </div>
               </div>
