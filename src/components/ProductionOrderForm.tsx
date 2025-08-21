@@ -522,65 +522,68 @@ const ProductionOrderForm: React.FC = () => {
                 </div>
               </div>
 
-              {/* Palletization */}
-              <div>
-                <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type
-              </Label>
-                <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Select pallet type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>
-                    <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
-                  </SelectContent>
-                </Select>
-               </div>
+              {/* Palletization - Only for 24Pack */}
+              {formData.packagingVariant === '24pcs-tray' && (
+                <>
+                  <div>
+                    <Label htmlFor="palletType" className="text-sm font-medium">Pallet Type</Label>
+                    <Select value={formData.palletType} onValueChange={value => handleInputChange('palletType', value)}>
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="Select pallet type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="euro-pallet">Euro-pallet (tray per pallet)</SelectItem>
+                        <SelectItem value="uk-pallet">UK-pallet (tray per pallet)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                   </div>
 
-               {/* Conditional Tray Count for Pallets */}
-               {formData.palletType && formData.canSize && <div>
-                   <Label className="text-sm font-medium">Trays per Pallet</Label>
-                   <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
-                     <SelectTrigger className="mt-1">
-                       <SelectValue placeholder="Select tray count" />
-                     </SelectTrigger>
-                     <SelectContent>
-                       {/* 250ml Slim options */}
-                       {formData.canSize === '250ml-slim' && formData.palletType === 'euro-pallet' && <>
-                           <SelectItem value="108">108 Trays per Euro Pallet</SelectItem>
-                           <SelectItem value="120">120 Trays per Euro Pallet</SelectItem>
-                         </>}
-                       {formData.canSize === '250ml-slim' && formData.palletType === 'uk-pallet' && <SelectItem value="160">160 Trays per UK Pallet</SelectItem>}
-                       
-                       {/* 330ml/355ml Sleek options */}
-                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'euro-pallet' && <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>}
-                       {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'uk-pallet' && <SelectItem value="104">104 Trays per UK Pallet</SelectItem>}
-                       
-                       {/* 500ml Base options */}
-                       {formData.canSize === '500ml-base' && formData.palletType === 'euro-pallet' && <SelectItem value="72">72 Trays per Euro Pallet</SelectItem>}
-                       {formData.canSize === '500ml-base' && formData.palletType === 'uk-pallet' && <SelectItem value="90">90 Trays per UK Pallet</SelectItem>}
-                     </SelectContent>
-                   </Select>
-                 </div>}
+                   {/* Conditional Tray Count for Pallets */}
+                   {formData.palletType && formData.canSize && <div>
+                       <Label className="text-sm font-medium">Trays per Pallet</Label>
+                       <Select value={formData.traysPerPallet || ''} onValueChange={value => handleInputChange('traysPerPallet', value)}>
+                         <SelectTrigger className="mt-1">
+                           <SelectValue placeholder="Select tray count" />
+                         </SelectTrigger>
+                         <SelectContent>
+                           {/* 250ml Slim options */}
+                           {formData.canSize === '250ml-slim' && formData.palletType === 'euro-pallet' && <>
+                               <SelectItem value="108">108 Trays per Euro Pallet</SelectItem>
+                               <SelectItem value="120">120 Trays per Euro Pallet</SelectItem>
+                             </>}
+                           {formData.canSize === '250ml-slim' && formData.palletType === 'uk-pallet' && <SelectItem value="160">160 Trays per UK Pallet</SelectItem>}
+                           
+                           {/* 330ml/355ml Sleek options */}
+                           {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'euro-pallet' && <SelectItem value="90">90 Trays per Euro Pallet</SelectItem>}
+                           {(formData.canSize === '330ml-sleek' || formData.canSize === '355ml-sleek') && formData.palletType === 'uk-pallet' && <SelectItem value="104">104 Trays per UK Pallet</SelectItem>}
+                           
+                           {/* 500ml Base options */}
+                           {formData.canSize === '500ml-base' && formData.palletType === 'euro-pallet' && <SelectItem value="72">72 Trays per Euro Pallet</SelectItem>}
+                           {formData.canSize === '500ml-base' && formData.palletType === 'uk-pallet' && <SelectItem value="90">90 Trays per UK Pallet</SelectItem>}
+                         </SelectContent>
+                       </Select>
+                     </div>}
 
-              {/* Protection Options */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
-                  <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
-                    <div className="flex items-center space-x-4 mt-2">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="yes" id="wrap-yes" />
-                        <Label htmlFor="wrap-yes">Yes</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="no" id="wrap-no" />
-                        <Label htmlFor="wrap-no">No</Label>
-                      </div>
+                  {/* Protection Options */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-sm font-medium">Double Wrapping of Pallets</Label>
+                      <RadioGroup value={formData.doubleWrapping} onValueChange={value => handleInputChange('doubleWrapping', value)}>
+                        <div className="flex items-center space-x-4 mt-2">
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="yes" id="wrap-yes" />
+                            <Label htmlFor="wrap-yes">Yes</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="no" id="wrap-no" />
+                            <Label htmlFor="wrap-no">No</Label>
+                          </div>
+                        </div>
+                      </RadioGroup>             
                     </div>
-                  </RadioGroup>             
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
 
               {/* Tray Information */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
